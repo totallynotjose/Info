@@ -11,14 +11,15 @@ public class Main {
 		while (decision < 1 || decision > 2) {
 			System.out.println();
 			System.out.println("Invalid input, please try again: (1) yes (2) no");
+			decision = SystemInReader.readInt();
 		}
 		if (decision == 1) {
 			return true;
-		}
-		else {
+		} else {
+
 			return false;
 		}
-		
+
 	}
 
 	public static void main(String[] args) {
@@ -38,9 +39,15 @@ public class Main {
 			while (fight == true) {
 				// fight happens here
 				// TODO add fight here
+				System.out.println("Test");
+				fight = false;
 			}
-			
+
 			fight = newFight();
+			// if no more fight also stop the game (for now, needs to be adapted)
+			if (fight == false) {
+				game = false;
+			}
 		}
 
 	}

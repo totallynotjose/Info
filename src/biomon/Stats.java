@@ -21,6 +21,17 @@ public class Stats {
 			{ 12, 13, 14, 16, 16, 17, 18, 18, 19, 20, 22, 23, 24, 25, 26 },
 			{ 8, 10, 12, 14, 16, 18, 19, 20, 22, 24, 26, 29, 32, 35, 38 } };
 
+	// type 0 fluffy; type 1 slimy, type 3 crispy
+	public static int getMaxHP(int level, int type) {
+		if (type == 0) {
+			return (10 + 5 * level);
+		} else if (type == 1) {
+			return (20 + 5 * level);
+		} else {
+			return (30 + 5 * level);
+		}
+	}
+
 	public static void main(String[] args) {
 
 	}
