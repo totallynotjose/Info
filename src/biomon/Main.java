@@ -4,7 +4,8 @@ public class Main {
 
 	// TODO add all loops
 	// TODO add methods from stats
-	// TODO test if type and max hp work
+	// TODO bring both methods (newFight and chooseOwnBiomon) to stats
+	// TODO make Biomon class with fields (not 500 ints with different infos
 
 	private static boolean newFight() {
 		System.out.println("Do you want to start the  next fight? (1) yes (2) no");
@@ -46,22 +47,32 @@ public class Main {
 		boolean game = true; // game runs while true
 		boolean fight = true; // after every fight decide if you want another one (if not game ends)
 		// separation of game and fight because saving happens outside of the fight
-
-		int myType = chooseOwnBiomon();
-		System.out.println("Type is " + myType + " and maxHP are " + Stats.getMaxHP(0, myType));
-		System.out.println();
-
 		int fightCounter = 0;
+
+		// choose type of Biomon (and print for checking), start with level 0
+		int myLevel = 0;
+		int myType = chooseOwnBiomon();
+		System.out.println("Type is " + myType + " and maxHP are " + Stats.getMaxHP(myLevel, myType));
+		System.out.println();
 
 		while (game == true) {
 			fightCounter++;
 
-			System.out.println(fightCounter + ". fight!");
-			// TODO print stats here
+			// if fight == true make enemyBiomon here (HP, type and level)
+			if (fight == true) {
+				// type of enemy 1, 2 or 3
+				int enemyType = (int) (Math.random() * (3 - 1 + 1) + 1);
+				int enemyLevel = myLevel;
+				System.out.println("Enemy type is " + enemyType + " and level is " + (enemyLevel + 1)
+						+ " and max HP are " + Stats.getMaxHP(enemyLevel, enemyType));
+
+				System.out.println(fightCounter + ". fight!");
+			}
 
 			while (fight == true) {
 				// fight happens here
 				// TODO add fight here
+
 				System.out.println("Test");
 				fight = false;
 			}
