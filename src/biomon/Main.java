@@ -7,24 +7,10 @@ public class Main {
 	// TODO bring newFight to stats
 	// TODO make class where questions about fight will be dealt with
 
-	private static boolean newFight() {
-		System.out.println("Do you want to start the  next fight? (1) yes (2) no");
-		int decision = SystemInReader.readInt();
-		while (decision < 1 || decision > 2) {
-			System.out.println();
-			System.out.println("Invalid input, please try again: (1) yes (2) no");
-			decision = SystemInReader.readInt();
-		}
-		if (decision == 1) {
-			return true;
-		} else {
-
-			return false;
-		}
-
-	}
-
 	public static void main(String[] args) {
+
+		// TODO should game and fight be public so it could be affected by other classes
+		// like fight?
 
 		boolean game = true; // game runs while true
 		boolean fight = true; // after every fight decide if you want another one (if not game ends)
@@ -36,32 +22,17 @@ public class Main {
 				+ " and my maxHP are " + myBiomon.getMaxHP());
 		System.out.println();
 
-		while (game == true) {
-
-			// if fight == true make enemyBiomon here (HP, type and level)
+		do {
+			// if no more fight the game is ended
+			// TODO instead add saving and back to main screen here!
 			if (fight == true) {
-				// type of enemy 1, 2 or 3
-				Biomon enemyBiomon = new Biomon(2, myBiomon.getLevel());
-
-				// as you level up with each fight your level is an indicator for the amounts of
-				// fights you had
-				System.out.println(myBiomon.printLevel() + ". fight!");
-			}
-
-			while (fight == true) {
-				// fight happens here
-				// TODO add fight here
-
-				System.out.println("Test");
-				fight = false;
-			}
-
-			fight = newFight();
-			// if no more fight also stop the game (for now, needs to be adapted)
-			if (fight == false) {
+				// starts fight, ends if either Biomon has 0 (or less) HP
+				Fight.ThisFight(myBiomon, new Biomon(2, myBiomon.getLevel()));
+				fight = Fight.nextFight();
+			} else {
 				game = false;
 			}
-		}
+		} while (game == true);
 
 	}
 
