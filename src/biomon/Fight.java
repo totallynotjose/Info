@@ -4,11 +4,7 @@ package biomon;
 
 public class Fight {
 	// who starts the fight (initiative)
-	// alternating turns
-	// choose attack
 	// random attack of enemy
-	// calculate damage dealt (for either attack)
-	// fight has to stop when either HP drops to 0 or less
 	// if we won we need to level up
 
 	// after the fight is won you can choose if you want to do another one
@@ -27,11 +23,49 @@ public class Fight {
 		}
 	}
 
+	private static void myAttack(Biomon myBiomon, Biomon enemyBiomon) {
+		System.out.println("1 -> basic attack; 2 -> special attack; 3 -> healing");
+		int attack = SystemInReader.readInt();
+		// currently not fool proof (nothing happens if you enter anthing other than 1,
+		// 2 or 3) -> does not matter with GUI, only in text based!
+
+		switch (attack) {
+		case 1:
+			enemyBiomon.setCurrentHP(myBiomon.normalAttack());
+			break;
+		case 2:
+			enemyBiomon.setCurrentHP(myBiomon.specialAttack(enemyBiomon.getType()));
+			break;
+		case 3:
+			myBiomon.heal();
+			break;
+		}
+	}
+
 	public static void ThisFight(Biomon myBiomon, Biomon enemyBiomon) {
 		// as you level up with each fight your level is an indicator for the amounts of
 		// fights you had
 		System.out.println(myBiomon.printLevel() + ". fight!");
-		System.out.println("Test fight");
+		System.out.println();
+
+		// TODO turn start value needs to be adjusted -> should depend on ini
+		// turns divided in odd and even -> alternating
+		while ((myBiomon.getCurrentHP() > 0) && (enemyBiomon.getCurrentHP() > 0)) {
+			int turn = 2;
+
+			// print stats before every attack
+			System.out.println("My Biomon: " + myBiomon.getCurrentHP() + " HP; enemy Biomon: "
+					+ enemyBiomon.getCurrentHP() + " HP");
+			System.out.println();
+
+			if (turn % 2 == 0) {
+				myAttack(myBiomon, enemyBiomon);
+			} else {
+				// enemy turn
+			}
+
+		}
+
 	}
 
 }

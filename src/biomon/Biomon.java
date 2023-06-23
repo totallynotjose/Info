@@ -8,9 +8,10 @@ public class Biomon {
 	// Biomon start at level 0 (equals level 1)
 	private int maxHP, currentHP, type;
 	private int level = 0;
-	
+
 	// stats for attacks
-	// normal attack, crit normal attack, special attack (levels 1 to 15; index 0 to 14)
+	// normal attack, crit normal attack, special attack (levels 1 to 15; index 0 to
+	// 14)
 	// optional: would be nice to read these from a file to make it more readable
 	private int[][] fluffyStats = { { 10, 12, 14, 16, 18, 20, 21, 22, 23, 24, 26, 27, 28, 29, 30 },
 			{ 12, 14, 16, 18, 20, 25, 26, 27, 28, 29, 32, 33, 34, 35, 36 },
@@ -71,6 +72,74 @@ public class Biomon {
 
 	public int getMaxHP() {
 		return maxHP;
+	}
+	
+	public int getCurrentHP () {
+		return currentHP;
+	}
+
+	// TODO add crit
+	public int normalAttack() {
+		if (type == 1) {
+			System.out.println("Basic attack, " + fluffyStats[0][level] + " damage dealt!");
+			return fluffyStats[0][level];
+		} else if (type == 2) {
+			System.out.println("Basic attack, " + slimyStats[0][level] + " damage dealt!");
+			return slimyStats[0][level];
+		} else {
+			System.out.println("Basic attack, " + crispyStats[0][level] + " damage dealt!");
+			return crispyStats[0][level];
+		}
+	}
+
+	public int specialAttack(int enemyType) {
+		int damage;
+		if (type == 1) {
+			// for fluffy: effective against crispy, not effective against slimy
+			if (type == enemyType) {
+				damage = fluffyStats[2][level];
+			} else if (enemyType == 3) {
+				damage = fluffyStats[2][level] * 15 / 10;
+			} else {
+				damage = fluffyStats[2][level] * 5 / 10;
+			}
+		} else if (type == 2) {
+			// for slimy: effective against fluffy, not effective against crispy
+			if (type == enemyType) {
+				damage = slimyStats[2][level];
+			} else if (enemyType == 1) {
+				damage = slimyStats[2][level] * 15 / 10;
+			} else {
+				damage = slimyStats[2][level] * 5 / 10;
+			}
+		} else {
+			if (type == enemyType) {
+				damage = crispyStats[2][level];
+			} else if (enemyType == 2) {
+				damage = crispyStats[2][level] * 15 / 10;
+			} else {
+				damage = crispyStats[2][level] * 5 / 10;
+			}
+		}
+
+		System.out.println("Special attack, " + damage + " damage dealt!");
+		return damage;
+	}
+
+	// maybe change message depending on Biomon (myself or enemy)?
+	public void heal() {
+		currentHP = currentHP + (maxHP / 2);
+		if (currentHP > maxHP) {
+			currentHP = maxHP;
+		}
+		System.out.println("Healing successful!");
+	}
+
+	public void setCurrentHP(int damage) {
+		currentHP = currentHP - damage;
+		if (currentHP < 0) {
+			currentHP = 0;
+		}
 	}
 
 	public Biomon(int type, int level) {
