@@ -38,6 +38,7 @@ public class Fight {
 			break;
 		case 3:
 			myBiomon.heal();
+			System.out.println("Healing successful!");
 			break;
 		}
 	}
@@ -56,6 +57,7 @@ public class Fight {
 			break;
 		case 3:
 			enemyBiomon.heal();
+			System.out.println("Healing successful!");
 			break;
 		}
 	}

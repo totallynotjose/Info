@@ -2,13 +2,14 @@ package biomon;
 
 //all we need to make a biomon
 
+//TODO add levelUp -> access after a fight if myBiomon.getCurrentHP > 0 and before next fight is asked
+
 public class Biomon {
 
 	// all the stats the Biomon need
 	// Biomon start at level 0 (equals level 1)
-	private int maxHP, currentHP;
+	private int maxHP, currentHP, type;
 	private int level = 0;
-	private static int type;
 
 	// stats for attacks
 	// normal attack, crit normal attack, special attack (levels 1 to 15; index 0 to
@@ -90,6 +91,7 @@ public class Biomon {
 			damage = crispyStats[0][level];
 		}
 		System.out.println("Basic attack, " + damage + " damage dealt!");
+		System.out.println();
 		return damage;
 	}
 
@@ -124,16 +126,17 @@ public class Biomon {
 		}
 
 		System.out.println("Special attack, " + damage + " damage dealt!");
+		System.out.println();
 		return damage;
 	}
 
-	// maybe change message depending on Biomon (myself or enemy)?
+	// message "Healing successful not included here because healing is also used
+	// after you win a fight (not supposed to happen during level up
 	public void heal() {
 		currentHP = currentHP + (maxHP / 2);
 		if (currentHP > maxHP) {
 			currentHP = maxHP;
 		}
-		System.out.println("Healing successful!");
 	}
 
 	public void setCurrentHP(int damage) {
@@ -141,6 +144,14 @@ public class Biomon {
 		if (currentHP < 0) {
 			currentHP = 0;
 		}
+	}
+
+	public void levelUp() {
+		level++;
+		maxHP = calculateMaxHP();
+		heal();
+		System.out.println("You won! Biomon level up: level " + printLevel() + ", max HP " + maxHP + ", current HP "
+				+ currentHP + "!");
 	}
 
 	public Biomon(int type, int level) {

@@ -20,9 +20,20 @@ public class Main {
 			// TODO instead add saving and back to main screen here!
 
 			// starts fight, ends if either Biomon has 0 (or less) HP
+			System.out.println("get level = " + myBiomon.getLevel());
 			Fight.ThisFight(myBiomon, new Biomon(2, myBiomon.getLevel()));
-			game = Fight.nextFight();
+
+			if (myBiomon.getCurrentHP() > 0) {
+				myBiomon.levelUp();
+				
+				game = Fight.nextFight();
+			} else {
+				System.out.println("You lost :(");
+				game = false;
+			}
 
 		} while (game == true);
+		System.out.println("The game has ended.");
+
 	}
 }
