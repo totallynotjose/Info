@@ -6,8 +6,9 @@ public class Biomon {
 
 	// all the stats the Biomon need
 	// Biomon start at level 0 (equals level 1)
-	private int maxHP, currentHP, type;
+	private int maxHP, currentHP;
 	private int level = 0;
+	private static int type;
 
 	// stats for attacks
 	// normal attack, crit normal attack, special attack (levels 1 to 15; index 0 to
@@ -53,10 +54,10 @@ public class Biomon {
 	}
 
 	/*
-	 * print level and get level are two different methods because get level refers
-	 * to the index that we also use in arrays (stats for level one are index 0, so
-	 * the level starts at 0. But for printing you want the actual level, not the
-	 * index we will be using
+	 * print level and get level are two different methods because getLevel refers
+	 * to the index that we use in arrays (stats for level one are index 0, so the
+	 * level starts at 0. But for printing you want the actual level, not the index
+	 * we will be using
 	 */
 	public int getLevel() {
 		return level;
@@ -73,23 +74,23 @@ public class Biomon {
 	public int getMaxHP() {
 		return maxHP;
 	}
-	
-	public int getCurrentHP () {
+
+	public int getCurrentHP() {
 		return currentHP;
 	}
 
 	// TODO add crit
 	public int normalAttack() {
+		int damage;
 		if (type == 1) {
-			System.out.println("Basic attack, " + fluffyStats[0][level] + " damage dealt!");
-			return fluffyStats[0][level];
+			damage = fluffyStats[0][level];
 		} else if (type == 2) {
-			System.out.println("Basic attack, " + slimyStats[0][level] + " damage dealt!");
-			return slimyStats[0][level];
+			damage = slimyStats[0][level];
 		} else {
-			System.out.println("Basic attack, " + crispyStats[0][level] + " damage dealt!");
-			return crispyStats[0][level];
+			damage = crispyStats[0][level];
 		}
+		System.out.println("Basic attack, " + damage + " damage dealt!");
+		return damage;
 	}
 
 	public int specialAttack(int enemyType) {

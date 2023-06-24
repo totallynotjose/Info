@@ -26,7 +26,7 @@ public class Fight {
 	private static void myAttack(Biomon myBiomon, Biomon enemyBiomon) {
 		System.out.println("1 -> basic attack; 2 -> special attack; 3 -> healing");
 		int attack = SystemInReader.readInt();
-		// currently not fool proof (nothing happens if you enter anthing other than 1,
+		// currently not fool proof (nothing happens if you enter anything other than 1,
 		// 2 or 3) -> does not matter with GUI, only in text based!
 
 		switch (attack) {
@@ -42,6 +42,24 @@ public class Fight {
 		}
 	}
 
+	private static void enemyAttack(Biomon myBiomon, Biomon enemyBiomon) {
+		int attack = (int) (Math.random() * (3 - 1 + 1) + 1);
+		// TODO enemy should heal less is still (almost) full HP and more when they have
+		// less HP
+
+		switch (attack) {
+		case 1:
+			myBiomon.setCurrentHP(enemyBiomon.normalAttack());
+			break;
+		case 2:
+			myBiomon.setCurrentHP(enemyBiomon.specialAttack(myBiomon.getType()));
+			break;
+		case 3:
+			enemyBiomon.heal();
+			break;
+		}
+	}
+
 	public static void ThisFight(Biomon myBiomon, Biomon enemyBiomon) {
 		// as you level up with each fight your level is an indicator for the amounts of
 		// fights you had
@@ -50,8 +68,8 @@ public class Fight {
 
 		// TODO turn start value needs to be adjusted -> should depend on ini
 		// turns divided in odd and even -> alternating
+		int turn = 2;
 		while ((myBiomon.getCurrentHP() > 0) && (enemyBiomon.getCurrentHP() > 0)) {
-			int turn = 2;
 
 			// print stats before every attack
 			System.out.println("My Biomon: " + myBiomon.getCurrentHP() + " HP; enemy Biomon: "
@@ -61,8 +79,9 @@ public class Fight {
 			if (turn % 2 == 0) {
 				myAttack(myBiomon, enemyBiomon);
 			} else {
-				// enemy turn
+				enemyAttack(myBiomon, enemyBiomon);
 			}
+			turn++;
 
 		}
 
