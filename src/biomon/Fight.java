@@ -15,6 +15,7 @@ public class Fight {
 			System.out.println();
 			System.out.println("Invalid input, please try again: (1) yes (2) no");
 			decision = SystemInReader.readInt();
+			System.out.println();
 		}
 		if (decision == 1) {
 			return true;
@@ -43,10 +44,13 @@ public class Fight {
 		}
 	}
 
+	/*
+	 * enemy Biomon heals less often if it has (almost) full HP and more often when
+	 * HP drop Example: 100 maxHP and 100 currentHP -> 1; currentHP 50 -> 2;
+	 * currentHP 10 -> 10 more random numbers result in a heal
+	 */
 	private static void enemyAttack(Biomon myBiomon, Biomon enemyBiomon) {
-		int attack = (int) (Math.random() * (3 - 1 + 1) + 1);
-		// TODO enemy should heal less is still (almost) full HP and more when they have
-		// less HP
+		int attack = (int) Math.random() * (enemyBiomon.getMaxHP() / enemyBiomon.getCurrentHP()) + 1;
 
 		switch (attack) {
 		case 1:
@@ -55,7 +59,7 @@ public class Fight {
 		case 2:
 			myBiomon.setCurrentHP(enemyBiomon.specialAttack(myBiomon.getType()));
 			break;
-		case 3:
+		default:
 			enemyBiomon.heal();
 			System.out.println("Healing successful!");
 			break;
@@ -66,11 +70,24 @@ public class Fight {
 		// as you level up with each fight your level is an indicator for the amounts of
 		// fights you had
 		System.out.println(myBiomon.printLevel() + ". fight!");
+
+		System.out.println("Enemy Biomon is " + enemyBiomon.printType() + " and level " + enemyBiomon.printLevel());
 		System.out.println();
 
-		// TODO turn start value needs to be adjusted -> should depend on ini
+		System.out.println(
+				"Test: my ini = " + myBiomon.getInitiative() + " and enemy ini = " + enemyBiomon.getInitiative());
+
 		// turns divided in odd and even -> alternating
-		int turn = 2;
+		int turn;
+
+		if (myBiomon.getInitiative() > enemyBiomon.getInitiative()) {
+			turn = 0;
+		} else if (enemyBiomon.getInitiative() > myBiomon.getInitiative()) {
+			turn = 1;
+		} else {
+			turn = (int) Math.random() * 10;
+		}
+
 		while ((myBiomon.getCurrentHP() > 0) && (enemyBiomon.getCurrentHP() > 0)) {
 
 			// print stats before every attack
@@ -79,8 +96,10 @@ public class Fight {
 			System.out.println();
 
 			if (turn % 2 == 0) {
+				System.out.println("Your turn!");
 				myAttack(myBiomon, enemyBiomon);
 			} else {
+				System.out.println("Enemy turn!");
 				enemyAttack(myBiomon, enemyBiomon);
 			}
 			turn++;

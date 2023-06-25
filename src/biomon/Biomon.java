@@ -2,8 +2,6 @@ package biomon;
 
 //all we need to make a biomon
 
-//TODO add levelUp -> access after a fight if myBiomon.getCurrentHP > 0 and before next fight is asked
-
 public class Biomon {
 
 	// all the stats the Biomon need
@@ -68,8 +66,23 @@ public class Biomon {
 		return (level + 1);
 	}
 
+	/*
+	 * getType refers to the number/index associated with the type. printType is
+	 * used if you want to print the type; the name of the type is much more useful
+	 * here than the number/index
+	 */
 	public int getType() {
 		return type;
+	}
+
+	public String printType() {
+		if (type == 1) {
+			return "fluffy";
+		} else if (type == 2) {
+			return "slimy";
+		} else {
+			return "crispy";
+		}
 	}
 
 	public int getMaxHP() {
@@ -80,15 +93,28 @@ public class Biomon {
 		return currentHP;
 	}
 
-	// TODO add crit
+	public int getInitiative() {
+		return (4 - type) + level / 5;
+	}
+
+	// here damage for attacks and the heal are calculated
+
+	// if the random number is less than 20, a critical hit is made
+	// normal attack damage has the index 0, critical damage has index 1
 	public int normalAttack() {
-		int damage;
+		int damage, crit = 0;
+		
+		if (Math.random() * 100 < 20) {
+			crit = 1;
+			System.out.println("Critical hit!");
+		}
+		
 		if (type == 1) {
-			damage = fluffyStats[0][level];
+			damage = fluffyStats[crit][level];
 		} else if (type == 2) {
-			damage = slimyStats[0][level];
+			damage = slimyStats[crit][level];
 		} else {
-			damage = crispyStats[0][level];
+			damage = crispyStats[crit][level];
 		}
 		System.out.println("Basic attack, " + damage + " damage dealt!");
 		System.out.println();
@@ -146,6 +172,7 @@ public class Biomon {
 		}
 	}
 
+	// if you win you level up and heal up to 50% of your new maxHP
 	public void levelUp() {
 		level++;
 		maxHP = calculateMaxHP();
@@ -157,6 +184,18 @@ public class Biomon {
 	public Biomon(int type, int level) {
 		this.type = type;
 		this.level = level;
+		maxHP = calculateMaxHP();
+		currentHP = maxHP;
+	}
+
+	// for enemy Biomon the type is chosen randomly. The level is the level of
+	// myBiomon +/- 1 (to sometimes make it easier, sometimes harder)
+	public Biomon(int level) {
+		type = (int) (Math.random() * 3 + 1);
+		this.level = (int) Math.random() * ((level + 1) - (level - 1) + 1) + (level - 1);
+		if (this.level < 0) {
+			this.level = 0;
+		}
 		maxHP = calculateMaxHP();
 		currentHP = maxHP;
 	}
