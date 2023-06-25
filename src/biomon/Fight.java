@@ -1,22 +1,19 @@
 package biomon;
 
-// here all things regarding the fights will be handled 
-
 public class Fight {
-	// who starts the fight (initiative)
-	// random attack of enemy
-	// if we won we need to level up
 
-	// after the fight is won you can choose if you want to do another one
+	// after the fight is won you can choose if you want to do another fight
 	public static boolean nextFight() {
 		System.out.println("Do you want to start the  next fight? (1) yes (2) no");
 		int decision = SystemInReader.readInt();
+
 		while (decision < 1 || decision > 2) {
 			System.out.println();
 			System.out.println("Invalid input, please try again: (1) yes (2) no");
 			decision = SystemInReader.readInt();
 			System.out.println();
 		}
+
 		if (decision == 1) {
 			return true;
 		} else {
@@ -24,11 +21,10 @@ public class Fight {
 		}
 	}
 
+	// for my attack, choose between normal attack, special attack or healing
 	private static void myAttack(Biomon myBiomon, Biomon enemyBiomon) {
 		System.out.println("1 -> basic attack; 2 -> special attack; 3 -> healing");
 		int attack = SystemInReader.readInt();
-		// currently not fool proof (nothing happens if you enter anything other than 1,
-		// 2 or 3) -> does not matter with GUI, only in text based!
 
 		switch (attack) {
 		case 1:
@@ -45,12 +41,13 @@ public class Fight {
 	}
 
 	/*
-	 * enemy Biomon heals less often if it has (almost) full HP and more often when
-	 * HP drop Example: 100 maxHP and 100 currentHP -> 1; currentHP 50 -> 2;
-	 * currentHP 10 -> 10 more random numbers result in a heal
+	 * for enemy Biomon the attack is chosen randomly (same choices available) enemy
+	 * Biomon heals less often if it has (almost) full HP and more often when HP
+	 * drop. For example: 100 maxHP and 100 currentHP -> 1; currentHP 50 -> 2;
+	 * currentHP 10 -> 10. more random numbers result in a heal
 	 */
 	private static void enemyAttack(Biomon myBiomon, Biomon enemyBiomon) {
-		int attack = (int) Math.random() * (enemyBiomon.getMaxHP() / enemyBiomon.getCurrentHP()) + 1;
+		int attack = (int) Math.random() * (2 + (enemyBiomon.getMaxHP() / enemyBiomon.getCurrentHP())) + 1;
 
 		switch (attack) {
 		case 1:
@@ -74,12 +71,13 @@ public class Fight {
 		System.out.println("Enemy Biomon is " + enemyBiomon.printType() + " and level " + enemyBiomon.printLevel());
 		System.out.println();
 
-		System.out.println(
-				"Test: my ini = " + myBiomon.getInitiative() + " and enemy ini = " + enemyBiomon.getInitiative());
-
 		// turns divided in odd and even -> alternating
+		/*
+		 * The Biomon with the higher initiative gets to start. If they have the same
+		 * initiative, a random number gets picked. Turns are divided in odd and even;
+		 * after every move the counter is raised by one
+		 */
 		int turn;
-
 		if (myBiomon.getInitiative() > enemyBiomon.getInitiative()) {
 			turn = 0;
 		} else if (enemyBiomon.getInitiative() > myBiomon.getInitiative()) {
@@ -90,7 +88,7 @@ public class Fight {
 
 		while ((myBiomon.getCurrentHP() > 0) && (enemyBiomon.getCurrentHP() > 0)) {
 
-			// print stats before every attack
+			// print current HP before every attack
 			System.out.println("My Biomon: " + myBiomon.getCurrentHP() + " HP; enemy Biomon: "
 					+ enemyBiomon.getCurrentHP() + " HP");
 			System.out.println();

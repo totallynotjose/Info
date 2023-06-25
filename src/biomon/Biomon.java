@@ -1,16 +1,15 @@
 package biomon;
 
-//all we need to make a biomon
-
 public class Biomon {
 
 	// all the stats the Biomon need
-	// Biomon start at level 0 (equals level 1)
+	// Biomon start at level (index) 0 (equals level 1)
 	private int maxHP, currentHP, type;
 	private int level = 0;
 
 	// stats for attacks
-	// normal attack, crit normal attack, special attack (levels 1 to 15; index 0 to
+	// normal attack, critical normal attack, special attack (levels 1 to 15; index
+	// 0 to
 	// 14)
 	// optional: would be nice to read these from a file to make it more readable
 	private int[][] fluffyStats = { { 10, 12, 14, 16, 18, 20, 21, 22, 23, 24, 26, 27, 28, 29, 30 },
@@ -23,6 +22,7 @@ public class Biomon {
 			{ 12, 13, 14, 16, 16, 17, 18, 18, 19, 20, 22, 23, 24, 25, 26 },
 			{ 8, 10, 12, 14, 16, 18, 19, 20, 22, 24, 26, 29, 32, 35, 38 } };
 
+	// all setters and getters
 	public static int chooseMyType() {
 		System.out.println("Choose your Biomon-type! (1) fluffy (2) slimy (3) crispy");
 		int decision = SystemInReader.readInt();
@@ -54,9 +54,8 @@ public class Biomon {
 
 	/*
 	 * print level and get level are two different methods because getLevel refers
-	 * to the index that we use in arrays (stats for level one are index 0, so the
+	 * to the index that we use in arrays (stats for level 1 are index 0, so the
 	 * level starts at 0. But for printing you want the actual level, not the index
-	 * we will be using
 	 */
 	public int getLevel() {
 		return level;
@@ -67,7 +66,7 @@ public class Biomon {
 	}
 
 	/*
-	 * getType refers to the number/index associated with the type. printType is
+	 * getType refers to the number/index associated with the type, printType is
 	 * used if you want to print the type; the name of the type is much more useful
 	 * here than the number/index
 	 */
@@ -103,12 +102,12 @@ public class Biomon {
 	// normal attack damage has the index 0, critical damage has index 1
 	public int normalAttack() {
 		int damage, crit = 0;
-		
+
 		if (Math.random() * 100 < 20) {
 			crit = 1;
 			System.out.println("Critical hit!");
 		}
-		
+
 		if (type == 1) {
 			damage = fluffyStats[crit][level];
 		} else if (type == 2) {
@@ -121,6 +120,11 @@ public class Biomon {
 		return damage;
 	}
 
+	/*
+	 * special attack is effective against a certain types (damage increases by 50%)
+	 * and not effective against another type (damage decreases by 50%). If you
+	 * attack a Biomon of the same type the damage does not change
+	 */
 	public int specialAttack(int enemyType) {
 		int damage;
 		if (type == 1) {
@@ -157,7 +161,7 @@ public class Biomon {
 	}
 
 	// message "Healing successful not included here because healing is also used
-	// after you win a fight (not supposed to happen during level up
+	// after you win a fight (message not needed there)
 	public void heal() {
 		currentHP = currentHP + (maxHP / 2);
 		if (currentHP > maxHP) {
@@ -192,7 +196,7 @@ public class Biomon {
 	// myBiomon +/- 1 (to sometimes make it easier, sometimes harder)
 	public Biomon(int level) {
 		type = (int) (Math.random() * 3 + 1);
-		this.level = (int) Math.random() * ((level + 1) - (level - 1) + 1) + (level - 1);
+		this.level = (int) (Math.random() * ((level + 1) - (level - 1) + 1) + (level - 1));
 		if (this.level < 0) {
 			this.level = 0;
 		}
