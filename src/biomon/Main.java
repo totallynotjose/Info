@@ -4,7 +4,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		boolean game = true; // game runs while true
-
+		System.out.println("test");
 		// choose type of Biomon, start with level (index) 0
 		Biomon myBiomon = new Biomon(Biomon.chooseMyType(), 0);
 		System.out.println("My Biomon is type " + myBiomon.printType() + " and level " + myBiomon.printLevel() + " .");
