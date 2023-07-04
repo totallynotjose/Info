@@ -1,6 +1,8 @@
 package biomon;
 
-public class Biomon {
+import java.io.Serializable;
+
+public class Biomon implements Serializable {
 
 	// all the stats the Biomon need
 	// Biomon start at level (index) 0 (equals level 1)
