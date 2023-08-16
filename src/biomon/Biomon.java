@@ -6,8 +6,8 @@ public class Biomon implements Serializable {
 
 	// all the stats the Biomon need
 	// Biomon start at level (index) 0 (equals level 1)
-	private int maxHP, currentHP, type;
-	private int level = 0;
+	protected int maxHP, currentHP, type;
+	protected int level = 0;
 
 	// stats for attacks
 	// normal attack, critical normal attack, special attack (levels 1 to 15; index
@@ -44,7 +44,7 @@ public class Biomon implements Serializable {
 	}
 
 	// type 1 fluffy; type 2 slimy, type 3 crispy
-	public int calculateMaxHP() {
+	/*public int calculateMaxHP() {
 		if (type == 1) {
 			return (10 + 5 * level);
 		} else if (type == 2) {
@@ -52,7 +52,7 @@ public class Biomon implements Serializable {
 		} else {
 			return (30 + 5 * level);
 		}
-	}
+	}*/
 
 	/*
 	 * print level and get level are two different methods because getLevel refers
@@ -76,7 +76,7 @@ public class Biomon implements Serializable {
 		return type;
 	}
 
-	public String printType() {
+	/*public String printType() {
 		if (type == 1) {
 			return "fluffy";
 		} else if (type == 2) {
@@ -84,25 +84,25 @@ public class Biomon implements Serializable {
 		} else {
 			return "crispy";
 		}
-	}
+	}*/
 
-	public int getMaxHP() {
+	/*public int getMaxHP() {
 		return maxHP;
-	}
+	}*/
 
 	public int getCurrentHP() {
 		return currentHP;
 	}
 
-	public int getInitiative() {
+	/*public int getInitiative() {
 		return (4 - type) + level / 5;
-	}
+	}*/
 
 	// here damage for attacks and the heal are calculated
 
 	// if the random number is less than 20, a critical hit is made
 	// normal attack damage has the index 0, critical damage has index 1
-	public int normalAttack() {
+	/*public int normalAttack() {
 		int damage, crit = 0;
 
 		if (Math.random() * 100 < 20) {
@@ -120,14 +120,14 @@ public class Biomon implements Serializable {
 		System.out.println("Basic attack, " + damage + " damage dealt!");
 		System.out.println();
 		return damage;
-	}
+	}*/
 
 	/*
 	 * special attack is effective against a certain types (damage increases by 50%)
 	 * and not effective against another type (damage decreases by 50%). If you
 	 * attack a Biomon of the same type the damage does not change
 	 */
-	public int specialAttack(int enemyType) {
+	/*public int specialAttack(int enemyType) {
 		int damage;
 		if (type == 1) {
 			// for fluffy: effective against crispy, not effective against slimy
@@ -160,6 +160,11 @@ public class Biomon implements Serializable {
 		System.out.println("Special attack, " + damage + " damage dealt!");
 		System.out.println();
 		return damage;
+	}*/
+	
+	public int normalAttack () {
+		int damage = 0;
+		return damage;
 	}
 
 	// message "Healing successful not included here because healing is also used
@@ -181,17 +186,17 @@ public class Biomon implements Serializable {
 	// if you win you level up and heal up to 50% of your new maxHP
 	public void levelUp() {
 		level++;
-		maxHP = calculateMaxHP();
+		//maxHP = calculateMaxHP();
 		heal();
 		System.out.println("You won! Biomon level up: level " + printLevel() + ", max HP " + maxHP + ", current HP "
 				+ currentHP + "!");
 	}
 
-	public Biomon(int type, int level) {
-		this.type = type;
-		this.level = level;
-		maxHP = calculateMaxHP();
-		currentHP = maxHP;
+	public Biomon() {
+		type = chooseMyType();
+		level = 0;
+		//maxHP = calculateMaxHP();
+		//currentHP = maxHP;
 	}
 
 	// for enemy Biomon the type is chosen randomly. The level is the level of
@@ -202,8 +207,8 @@ public class Biomon implements Serializable {
 		if (this.level < 0) {
 			this.level = 0;
 		}
-		maxHP = calculateMaxHP();
-		currentHP = maxHP;
+		//maxHP = calculateMaxHP();
+		//currentHP = maxHP;
 	}
 
 }
