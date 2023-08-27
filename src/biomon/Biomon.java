@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 public class Biomon implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// all the stats the Biomon need
 	// Biomon start at level (index) 0 (equals level 1)
 	private int maxHP, currentHP, type;
@@ -25,22 +29,11 @@ public class Biomon implements Serializable {
 			{ 8, 10, 12, 14, 16, 18, 19, 20, 22, 24, 26, 29, 32, 35, 38 } };
 
 	// all setters and getters
-	public static int chooseMyType() {
+	public static int chooseMyType(int decision) {
+		
 		System.out.println("Choose your Biomon-type! (1) fluffy (2) slimy (3) crispy");
-		int decision = SystemInReader.readInt();
-
-		while (decision < 1 || decision > 3) {
-			System.out.println();
-			System.out.println("Invalid input, please try again: (1) fluffy (2) slimy (3) crispy");
-			decision = SystemInReader.readInt();
-		}
-		if (decision == 1) {
-			return 1;
-		} else if (decision == 2) {
-			return 2;
-		} else {
-			return 3;
-		}
+		decision = SystemInReader.readInt();
+		return decision;
 	}
 
 	// type 1 fluffy; type 2 slimy, type 3 crispy
