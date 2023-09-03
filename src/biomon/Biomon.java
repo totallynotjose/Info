@@ -2,6 +2,8 @@ package biomon;
 
 import java.io.Serializable;
 
+import gui.StarterChoiceMenu;
+
 public class Biomon implements Serializable {
 
 	/**
@@ -29,9 +31,10 @@ public class Biomon implements Serializable {
 			{ 8, 10, 12, 14, 16, 18, 19, 20, 22, 24, 26, 29, 32, 35, 38 } };
 
 	// all setters and getters
-	public static int chooseMyType(int decision) {
-		
-		System.out.println("Choose your Biomon-type! (1) fluffy (2) slimy (3) crispy");
+	public static int chooseMyType() {
+		//new StarterChoiceMenu();
+		System.out.println("Choose your Biomon Type! (1) fluffy (2) slimy (3) crispy");
+		int decision;
 		decision = SystemInReader.readInt();
 		return decision;
 	}

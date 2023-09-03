@@ -9,7 +9,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import biomon.Enums;
 import biomon.Game;
 
 public class MainMenu extends JFrame {
@@ -36,15 +35,15 @@ public class MainMenu extends JFrame {
 		backgroundpanel = new BackgroundPanel();
 		textlabel = new JLabel();
 		logolabel = new JLabel();
-		startbutton = new JButton("S t a r t   N e w   G a m e");
-		continuebutton = new JButton("C o n t i n u e   G a m e");
-		closebutton = new JButton("C l o s e   P r o g r a m");
+		startbutton = new JButton("Start New Game");
+		continuebutton = new JButton("Continue Game");
+		closebutton = new JButton("Close Program");
 		gameInput = 0;
 
-		textlabel.setText("H i g h s c o r e :   [ n ]");
-		textlabel.setFont(new Font("Agency FB", Font.BOLD, 18));
+		textlabel.setText("Highscore: [n]");
+		textlabel.setFont(new Font("Bahnschrift", Font.BOLD, 18));
 		textlabel.setForeground(Color.WHITE);
-		textlabel.setBounds(280, 210, 200, 50);
+		textlabel.setBounds(287, 212, 200, 50);
 		textlabel.setOpaque(false);
 		this.add(textlabel);
 
@@ -55,52 +54,36 @@ public class MainMenu extends JFrame {
 
 		startbutton.setBounds(250, 260, 200, 50);
 		startbutton.setFocusable(false);
-		startbutton.setFont(new Font("Agency FB", Font.BOLD, 16));
+		startbutton.setFont(new Font("Bahnschrift", Font.BOLD, 16));
 		startbutton.setBackground(Color.WHITE);
 		startbutton.setForeground(Color.DARK_GRAY);
 		startbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				MainMenu.this.dispose();
-				Game.startGame(1);
-				do {
-					Game.writeCurrentBiomonStats();
-
-					Game.fight();
-
-				} while (Game.game != Enums.RunningStates.GAME_OVER);
+				new StarterChoiceMenu();
 				
-				System.out.println("The game has ended.");
 			}
 		});
 		this.add(startbutton);
 
 		continuebutton.setBounds(250, 320, 200, 50);
 		continuebutton.setFocusable(false);
-		continuebutton.setFont(new Font("Agency FB", Font.BOLD, 16));
+		continuebutton.setFont(new Font("Bahnschrift", Font.BOLD, 16));
 		continuebutton.setBackground(Color.WHITE);
 		continuebutton.setForeground(Color.DARK_GRAY);
 		continuebutton.addActionListener(new ActionListener() {
+
 			public void actionPerformed(ActionEvent e) {
 				MainMenu.this.dispose();
-				Game.startGame(2);
-				
-				do {
-					Game.writeCurrentBiomonStats();
+				Game.startGame(0);
 
-					Game.fight();
-
-				} while (Game.game != Enums.RunningStates.GAME_OVER);
-				
-				System.out.println("The game has ended.");
-				
-				MainMenu.this.dispose();
 			}
 		});
 		this.add(continuebutton);
-		
+
 		closebutton.setBounds(250, 380, 200, 50);
 		closebutton.setFocusable(false);
-		closebutton.setFont(new Font("Agency FB", Font.BOLD, 16));
+		closebutton.setFont(new Font("Bahnschrift", Font.BOLD, 16));
 		closebutton.setBackground(Color.WHITE);
 		closebutton.setForeground(Color.DARK_GRAY);
 		closebutton.addActionListener(new ActionListener() {

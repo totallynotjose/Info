@@ -10,6 +10,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import biomon.Fight;
+import biomon.Game;
+
 public class FightMenu extends JFrame{
 		/**
 		 * 
@@ -50,7 +53,7 @@ public class FightMenu extends JFrame{
 		int playercounter;
 		int enemycounter;
 
-		FightMenu() {
+		public FightMenu() {
 			
 			iconimageicon = new ImageIcon("Icon.png");
 			
@@ -82,47 +85,41 @@ public class FightMenu extends JFrame{
 			enemylabel = new JLabel();
 			playerbar = new JProgressBar();
 			enemybar = new JProgressBar();
-			attack1button = new JButton("a t t a c k");
-			attack2button = new JButton("s p e c i a l   a t t a c k");
-			healbutton = new JButton("h e a l");
+			attack1button = new JButton("attack");
+			attack2button = new JButton("special attack");
+			healbutton = new JButton("heal");
 			
 			playercounter = 100;
 			enemycounter = 100;
 			
-			playertextlabel.setText("[type] [level] [HP]/[max. HP]");
-			playertextlabel.setFont(new Font("Agency FB", Font.BOLD, 16));
+			playertextlabel.setText(Game.writeCurrentBiomonStats());
+			playertextlabel.setFont(new Font("Bahnschrift", Font.BOLD, 13));
 			playertextlabel.setForeground(Color.WHITE);
 			playertextlabel.setBounds(20, 10, 700, 50);
 			playerlabel.setOpaque(true);
 			this.add(playertextlabel);
 			
-			enemytextlabel.setText("[type] [level] [HP]/[max. HP]");
-			enemytextlabel.setFont(new Font("Agency FB", Font.BOLD, 16));
+			//enemytextlabel.setText("[type] [level] [HP]/[max. HP]");
+			enemytextlabel.setText(Game.writeCurrentEnemyStats());
+			enemytextlabel.setFont(new Font("Bahnschrift", Font.BOLD, 13));
 			enemytextlabel.setForeground(Color.WHITE);
 			enemytextlabel.setBounds(470, 10, 700, 50);
 			enemylabel.setOpaque(true);
 			this.add(enemytextlabel);
 			
-			/*
-			fluffylabel.setIcon(fluffyimageicon);
-			fluffylabel.setOpaque(false);
-			fluffylabel.setBounds(-20, 100, fluffyimageicon.getIconWidth(), fluffyimageicon.getIconHeight());
-			this.add(fluffylabel);
+			/* playerlabel.setIcon(fluffyimageicon);
+			playerlabel.setOpaque(false);
+			playerlabel.setBounds(-20, 100, fluffyimageicon.getIconWidth(), fluffyimageicon.getIconHeight());
+			this.add(playerlabel);
 			
-			slimylabel.setIcon(slimyimageicon);
-			slimylabel.setOpaque(false);
-			slimylabel.setBounds(230, 100, slimyimageicon.getIconWidth(), slimyimageicon.getIconHeight());
-			this.add(slimylabel);
-			
-			crispylabel.setIcon(crispyimageicon);
-			crispylabel.setOpaque(false);
-			crispylabel.setBounds(480, 100, crispyimageicon.getIconWidth(), crispyimageicon.getIconHeight());
-			this.add(crispylabel);
-			*/
+			enemylabel.setIcon(slimyimageicon);
+			enemylabel.setOpaque(false);
+			enemylabel.setBounds(230, 100, slimyimageicon.getIconWidth(), slimyimageicon.getIconHeight());
+			this.add(enemylabel);*/
 			
 			playerbar.setValue(playercounter);
 			playerbar.setBounds(20, 50, 200, 15);
-			playerbar.setFont(new Font("Agency FB", Font.BOLD, 0));
+			playerbar.setFont(new Font("Bahnschrift", Font.BOLD, 0));
 			playerbar.setForeground(new Color(0, 255, 0));
 			playerbar.setBackground(new Color(50, 50, 50));
 			playerbar.setStringPainted(true);
@@ -130,7 +127,7 @@ public class FightMenu extends JFrame{
 			
 			enemybar.setValue(enemycounter);
 			enemybar.setBounds(470, 50, 200, 15);
-			enemybar.setFont(new Font("Agency FB", Font.BOLD, 0));
+			enemybar.setFont(new Font("Bahnschrift", Font.BOLD, 0));
 			enemybar.setForeground(new Color(0, 255, 0));
 			enemybar.setBackground(new Color(50, 50, 50));
 			enemybar.setStringPainted(true);
@@ -138,36 +135,57 @@ public class FightMenu extends JFrame{
 			
 			attack1button.setBounds(10, 380, 200, 50);
 			attack1button.setFocusable(false);
-			attack1button.setFont(new Font("Agency FB", Font.BOLD, 16));
+			attack1button.setFont(new Font("Bahnschrift", Font.BOLD, 16));
 			attack1button.setBackground(Color.WHITE);
 			attack1button.setForeground(Color.DARK_GRAY);
 			attack1button.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					attack1();
+					Fight.myAttack(Game.biomonInstance, Game.enemyInstance, 1);
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					Fight.enemyAttack(Game.biomonInstance, Game.enemyInstance);
 				}
 			});
 			this.add(attack1button);
 
 			attack2button.setBounds(242, 380, 200, 50);
 			attack2button.setFocusable(false);
-			attack2button.setFont(new Font("Agency FB", Font.BOLD, 16));
+			attack2button.setFont(new Font("Bahnschrift", Font.BOLD, 16));
 			attack2button.setBackground(Color.WHITE);
 			attack2button.setForeground(Color.DARK_GRAY);
 			attack2button.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					attack2();
+					Fight.myAttack(Game.biomonInstance, Game.enemyInstance, 2);
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					Fight.enemyAttack(Game.biomonInstance, Game.enemyInstance);
 				}
 			});
 			this.add(attack2button);
 
 			healbutton.setBounds(475, 380, 200, 50);
 			healbutton.setFocusable(false);
-			healbutton.setFont(new Font("Agency FB", Font.BOLD, 16));
+			healbutton.setFont(new Font("Bahnschrift", Font.BOLD, 16));
 			healbutton.setBackground(Color.WHITE);
 			healbutton.setForeground(Color.DARK_GRAY);
 			healbutton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					playerheal();
+					Fight.myAttack(Game.biomonInstance, Game.enemyInstance, 3);
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					Fight.enemyAttack(Game.biomonInstance, Game.enemyInstance);
 				}
 			});
 			this.add(healbutton);
@@ -183,7 +201,7 @@ public class FightMenu extends JFrame{
 			this.setVisible(true); // sets frame to visible
 	}
 	
-	public void playerheal() {
+	/*public void playerheal() {
 		if (playercounter >= 0 && playercounter <= 100) {
 			playercounter = playercounter + 50;
 			playerbar.setValue(playercounter);
@@ -202,5 +220,5 @@ public class FightMenu extends JFrame{
 			enemycounter = enemycounter - 10;
 			enemybar.setValue(enemycounter);
 		}
-	}
+	}*/
 }

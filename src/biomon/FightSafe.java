@@ -2,7 +2,7 @@ package biomon;
 
 import gui.FightMenu;
 
-public class Fight {
+public class FightSafe {
 
 	// after the fight is won you can choose if you want to do another fight
 	public static boolean nextFight() {
@@ -24,7 +24,9 @@ public class Fight {
 	}
 
 	// for my attack, choose between normal attack, special attack or healing
-	public static void myAttack(Biomon myBiomon, Biomon enemyBiomon, int attack) {
+	private static void myAttack(Biomon myBiomon, Biomon enemyBiomon) {
+		System.out.println("1 -> basic attack; 2 -> special attack; 3 -> healing");
+		int attack = SystemInReader.readInt();
 
 		switch (attack) {
 		case 1:
@@ -35,6 +37,7 @@ public class Fight {
 			break;
 		case 3:
 			myBiomon.heal();
+			System.out.println("Healing successful!");
 			break;
 		}
 	}
@@ -45,7 +48,7 @@ public class Fight {
 	 * drop. For example: 100 maxHP and 100 currentHP -> 1; currentHP 50 -> 2;
 	 * currentHP 10 -> 10. more random numbers result in a heal
 	 */
-	public static void enemyAttack(Biomon myBiomon, Biomon enemyBiomon) {
+	private static void enemyAttack(Biomon myBiomon, Biomon enemyBiomon) {
 		int attack = (int) Math.random() * (2 + (enemyBiomon.getMaxHP() / enemyBiomon.getCurrentHP())) + 1;
 
 		switch (attack) {
