@@ -1,11 +1,14 @@
 package biomon;
 
-import gui.FightMenu;
+import gui.GameOver;
+import gui.SaveOrContinue;
 
 public class Fight {
 
+	public static int myAttack;
+	
 	// after the fight is won you can choose if you want to do another fight
-	public static boolean nextFight() {
+	/* public static boolean nextFight() {
 		System.out.println("Do you want to start the  next fight? (1) yes (2) no");
 		int decision = SystemInReader.readInt();
 
@@ -21,10 +24,12 @@ public class Fight {
 		} else {
 			return false;
 		}
-	}
+	}*/ 
 
 	// for my attack, choose between normal attack, special attack or healing
-	public static void myAttack(Biomon myBiomon, Biomon enemyBiomon, int attack) {
+	private static void myAttack(Biomon myBiomon, Biomon enemyBiomon, int attack) {
+		//System.out.println("1 -> basic attack; 2 -> special attack; 3 -> healing");
+		//int attack = SystemInReader.readInt();
 
 		switch (attack) {
 		case 1:
@@ -35,6 +40,7 @@ public class Fight {
 			break;
 		case 3:
 			myBiomon.heal();
+			//System.out.println("Healing successful!");
 			break;
 		}
 	}
@@ -45,7 +51,7 @@ public class Fight {
 	 * drop. For example: 100 maxHP and 100 currentHP -> 1; currentHP 50 -> 2;
 	 * currentHP 10 -> 10. more random numbers result in a heal
 	 */
-	public static void enemyAttack(Biomon myBiomon, Biomon enemyBiomon) {
+	private static void enemyAttack(Biomon myBiomon, Biomon enemyBiomon) {
 		int attack = (int) Math.random() * (2 + (enemyBiomon.getMaxHP() / enemyBiomon.getCurrentHP())) + 1;
 
 		switch (attack) {
@@ -57,18 +63,30 @@ public class Fight {
 			break;
 		default:
 			enemyBiomon.heal();
-			System.out.println("Healing successful!");
+			//System.out.println("Healing successful!");
 			break;
 		}
 	}
+	
+	public static int turn;
+	
+	/**
+	 * Displays the current Biomon's type and level.
+	 */
+    public static String writeCurrentBiomonStats(Biomon myBiomon) {
+    	String biomonstats;
+        biomonstats = "Type: " + myBiomon.printType() + " | Level: " + myBiomon.printLevel() + " | HP: " + myBiomon.getCurrentHP() + " / " + myBiomon.getMaxHP();
+        return biomonstats;
+    }
 
 	public static void ThisFight(Biomon myBiomon, Biomon enemyBiomon) {
 		// as you level up with each fight your level is an indicator for the amounts of
 		// fights you had
-		System.out.println(myBiomon.printLevel() + ". fight!");
+		//System.out.println(myBiomon.printLevel() + ". fight!");
 
-		System.out.println("Enemy Biomon is " + enemyBiomon.printType() + " and level " + enemyBiomon.printLevel());
-		System.out.println();
+		//System.out.println("My Biomon: " + writeCurrentBiomonStats(myBiomon));
+		//System.out.println("Enemy Biomon: " + writeCurrentBiomonStats(enemyBiomon));
+		//System.out.println();
 
 		// turns divided in odd and even -> alternating
 		/*
@@ -76,7 +94,6 @@ public class Fight {
 		 * initiative, a random number gets picked. Turns are divided in odd and even;
 		 * after every move the counter is raised by one
 		 */
-		int turn;
 		if (myBiomon.getInitiative() > enemyBiomon.getInitiative()) {
 			turn = 0;
 		} else if (enemyBiomon.getInitiative() > myBiomon.getInitiative()) {
@@ -85,24 +102,46 @@ public class Fight {
 			turn = (int) Math.random() * 10;
 		}
 
-		while ((myBiomon.getCurrentHP() > 0) && (enemyBiomon.getCurrentHP() > 0)) {
+		if ((myBiomon.getCurrentHP() > 0) && (enemyBiomon.getCurrentHP() > 0)) {
 
 			// print current HP before every attack
-			System.out.println("My Biomon: " + myBiomon.getCurrentHP() + " HP; enemy Biomon: "
-					+ enemyBiomon.getCurrentHP() + " HP");
-			System.out.println();
+			//System.out.println("My Biomon: " + myBiomon.getCurrentHP() + " HP; enemy Biomon: "
+					//+ enemyBiomon.getCurrentHP() + " HP");
+			//System.out.println();
+			
+			/* System.out.println("My Biomon: " + writeCurrentBiomonStats(myBiomon));
+			System.out.println("Enemy Biomon: " + writeCurrentBiomonStats(enemyBiomon));
+			System.out.println();*/
 
 			if (turn % 2 == 0) {
-				System.out.println("Your turn!");
-				myAttack(myBiomon, enemyBiomon);
+				//System.out.println("Your turn!");
+				myAttack(myBiomon, enemyBiomon, myAttack);
+				if (enemyBiomon.getCurrentHP() > 0) {
+					enemyAttack(myBiomon, enemyBiomon);
+				}
 			} else {
-				System.out.println("Enemy turn!");
+				//System.out.println("Enemy turn!");
 				enemyAttack(myBiomon, enemyBiomon);
+				if (myBiomon.getCurrentHP() > 0) {
+					myAttack(myBiomon, enemyBiomon, myAttack);
+				}
 			}
 			turn++;
 
 		}
 
+		if (myBiomon.getCurrentHP() > 0 && enemyBiomon.getCurrentHP() <= 0) {
+			myBiomon.levelUp();
+			Game.fightMenu.dispose();
+			Game.game = Enums.RunningStates.PAUSE;
+			new SaveOrContinue();
+			
+		} else if (myBiomon.getCurrentHP() <= 0) {
+			Game.fightMenu.dispose();
+			new GameOver();
+			Game.game = Enums.RunningStates.GAME_OVER;
+		}
+		
 	}
 
 }

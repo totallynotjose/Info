@@ -12,26 +12,76 @@ import javax.swing.JLabel;
 
 import biomon.Game;
 
+/**
+ * This class serves as graphical representation of the menu with which the
+ * player's starter Biomon can be chosen.
+ * 
+ * @author Lennart Alexander Brockmann
+ * @author Josephine Franke
+ * @author Kay Kiontke
+ * 
+ */
+
 public class StarterChoiceMenu extends JFrame {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	ImageIcon iconimageicon;
-	ImageIcon fluffyimageicon;
-	ImageIcon slimyimageicon;
-	ImageIcon crispyimageicon;
-	BackgroundPanel backgroundpanel;
-	JLabel textlabel;
-	JLabel fluffylabel;
-	JLabel slimylabel;
-	JLabel crispylabel;
-	JButton fluffybutton;
-	JButton slimybutton;
-	JButton crispybutton;
+	/**
+	 * This ImageIcon is the icon shown in the upper left corner of the frame.
+	 */
+	private ImageIcon iconimageicon;
+	/**
+	 * This ImageIcon is the pixel artwork for the starter of the fluffy type.
+	 */
+	private ImageIcon fluffyimageicon;
+	/**
+	 * This ImageIcon is the pixel artwork for the starter of the slimy type.
+	 */
+	private ImageIcon slimyimageicon;
+	/**
+	 * This ImageIcon is the pixel artwork for the starter of the crispy type.
+	 */
+	private ImageIcon crispyimageicon;
+	/**
+	 * This background panel enables the use of a background image.
+	 */
+	private BackgroundPanel backgroundpanel;
+	/**
+	 * This label includes information telling the player what to do.
+	 */
+	private JLabel textlabel;
+	/**
+	 * This label includes the fluffy imageicon.
+	 */
+	private JLabel fluffylabel;
+	/**
+	 * This label includes the slimy imageicon.
+	 */
+	private JLabel slimylabel;
+	/**
+	 * This label includes the crispy imageicon.
+	 */
+	private JLabel crispylabel;
+	/**
+	 * This button chooses fluffy as the starter.
+	 */
+	private JButton fluffybutton;
+	/**
+	 * This button chooses slimy as the starter.
+	 */
+	private JButton slimybutton;
+	/**
+	 * This button chooses crispy as the starter.
+	 */
+	private JButton crispybutton;
 
+	/**
+	 * This method creates a JFrame, initializes the components and adds them to the frame.
+	 */
 	public StarterChoiceMenu() {
 
+		// initializing of components
 		iconimageicon = new ImageIcon("Icon.png");
 		fluffyimageicon = new ImageIcon("Fluffy1.png");
 		slimyimageicon = new ImageIcon("Slimy1.png");
@@ -45,29 +95,33 @@ public class StarterChoiceMenu extends JFrame {
 		slimybutton = new JButton("Slimy");
 		crispybutton = new JButton("Crispy");
 
-		textlabel.setText(
-				"Choose one of the Biomon shown below by clicking on one of the buttons!");
+		// label including information for player
+		textlabel.setText("Choose one of the Biomon shown below by clicking on one of the buttons!");
 		textlabel.setFont(new Font("Bahnschrift", Font.BOLD, 16));
 		textlabel.setForeground(Color.WHITE);
 		textlabel.setBounds(62, 10, 700, 50);
 		textlabel.setOpaque(false);
 		this.add(textlabel);
 
+		// label including the fluffy imageicon
 		fluffylabel.setIcon(fluffyimageicon);
 		fluffylabel.setOpaque(false);
 		fluffylabel.setBounds(-20, 100, fluffyimageicon.getIconWidth(), fluffyimageicon.getIconHeight());
 		this.add(fluffylabel);
 
+		// label including the slimy imageicon
 		slimylabel.setIcon(slimyimageicon);
 		slimylabel.setOpaque(false);
 		slimylabel.setBounds(230, 100, slimyimageicon.getIconWidth(), slimyimageicon.getIconHeight());
 		this.add(slimylabel);
 
+		// label including the crispy imageicon
 		crispylabel.setIcon(crispyimageicon);
 		crispylabel.setOpaque(false);
 		crispylabel.setBounds(480, 100, crispyimageicon.getIconWidth(), crispyimageicon.getIconHeight());
 		this.add(crispylabel);
 
+		// button for choosing fluffy
 		fluffybutton.setBounds(10, 380, 200, 50);
 		fluffybutton.setFocusable(false);
 		fluffybutton.setFont(new Font("Bahnschrift", Font.BOLD, 16));
@@ -81,6 +135,7 @@ public class StarterChoiceMenu extends JFrame {
 		});
 		this.add(fluffybutton);
 
+		// button for choosing slimy
 		slimybutton.setBounds(242, 380, 200, 50);
 		slimybutton.setFocusable(false);
 		slimybutton.setFont(new Font("Bahnschrift", Font.BOLD, 16));
@@ -94,6 +149,7 @@ public class StarterChoiceMenu extends JFrame {
 		});
 		this.add(slimybutton);
 
+		// button for choosing crispy
 		crispybutton.setBounds(475, 380, 200, 50);
 		crispybutton.setFocusable(false);
 		crispybutton.setFont(new Font("Bahnschrift", Font.BOLD, 16));
@@ -107,15 +163,16 @@ public class StarterChoiceMenu extends JFrame {
 		});
 		this.add(crispybutton);
 
-		this.setIconImage(iconimageicon.getImage()); // changes icon of the frame
-		this.setTitle("Biomon"); // sets title of frame to "Biomon"
-		this.setSize(700, 480); // sets size of frame to 720 x 480 pixels
-		this.setResizable(false); // sets size of frame to non-resizable
-		this.setLocationRelativeTo(null); // sets frame to center of the screen
+		// settings for JFrame
+		this.setIconImage(iconimageicon.getImage());
+		this.setTitle("Biomon");
+		this.setSize(700, 480);
+		this.setResizable(false);
+		this.setLocationRelativeTo(null);
 		this.setLayout(null);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // sets default close operation to exit on close
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.add(backgroundpanel);
-		this.setVisible(true); // sets frame to visible
+		this.setVisible(true);
 
 	}
 }

@@ -10,41 +10,68 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-public class GameOver extends JFrame{
-	
+/**
+ * This class serves as graphical representation of the game over screen with
+ * which the player can choose what to do after being defeated in battle.
+ * 
+ * @author Lennart Alexander Brockmann
+ * @author Josephine Franke
+ * @author Kay Kiontke
+ * 
+ */
+
+public class GameOver extends JFrame {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	JLabel textlabel;
-	ImageIcon iconimageicon;
-	BackgroundPanel backgroundpanel;
-	JLabel logolabel;
-	JButton returnbutton;
-	JButton closebutton;
+	/**
+	 * This label includes the sentence "GAME OVER!".
+	 */
+	private JLabel textlabel;
+	/**
+	 * This ImageIcon is the icon shown in the upper left corner of the frame.
+	 */
+	private ImageIcon iconimageicon;
+	/**
+	 * This background panel enables the use of a background image.
+	 */
+	private BackgroundPanel backgroundpanel;
+	/**
+	 * This button lets the player return to the main menu.
+	 */
+	private JButton returnbutton;
+	/**
+	 * This button lets the player close the program.
+	 */
+	private JButton closebutton;
 
-	public int gameInput;
-
+	/**
+	 * This method creates a JFrame, initializes the components and adds them to the
+	 * frame.
+	 */
 	public GameOver() {
 
+		// initializing of components
 		iconimageicon = new ImageIcon("Icon.png");
 		backgroundpanel = new BackgroundPanel();
 		textlabel = new JLabel();
-		logolabel = new JLabel();
-		returnbutton = new JButton("R e t u r n   t o   M a i n   M e n u");
-		closebutton = new JButton("C l o s e   P r o g r a m");
+		returnbutton = new JButton("Return to Main Menu");
+		closebutton = new JButton("Close Program");
 
-		textlabel.setText("G A M E   O V E R !");
-		textlabel.setFont(new Font("Agency FB", Font.BOLD, 78));
+		// label for the text
+		textlabel.setText("GAME OVER!");
+		textlabel.setFont(new Font("Bahnschrift", Font.BOLD, 78));
 		textlabel.setForeground(Color.WHITE);
 		textlabel.setBounds(120, 100, 480, 100);
 		textlabel.setOpaque(false);
 		this.add(textlabel);
 
+		// button for returning to main menu
 		returnbutton.setBounds(250, 280, 200, 50);
 		returnbutton.setFocusable(false);
-		returnbutton.setFont(new Font("Agency FB", Font.BOLD, 16));
+		returnbutton.setFont(new Font("Bahnschrift", Font.BOLD, 16));
 		returnbutton.setBackground(Color.WHITE);
 		returnbutton.setForeground(Color.DARK_GRAY);
 		returnbutton.addActionListener(new ActionListener() {
@@ -54,10 +81,11 @@ public class GameOver extends JFrame{
 			}
 		});
 		this.add(returnbutton);
-		
+
+		// button for closing program
 		closebutton.setBounds(250, 340, 200, 50);
 		closebutton.setFocusable(false);
-		closebutton.setFont(new Font("Agency FB", Font.BOLD, 16));
+		closebutton.setFont(new Font("Bahnschrift", Font.BOLD, 16));
 		closebutton.setBackground(Color.WHITE);
 		closebutton.setForeground(Color.DARK_GRAY);
 		closebutton.addActionListener(new ActionListener() {
@@ -67,6 +95,7 @@ public class GameOver extends JFrame{
 		});
 		this.add(closebutton);
 
+		// settings for JFrame
 		this.setIconImage(iconimageicon.getImage()); // changes icon of the frame
 		this.setTitle("Biomon"); // sets title of frame to "Biomon"
 		this.setSize(700, 480); // sets size of frame to 720 x 480 pixels

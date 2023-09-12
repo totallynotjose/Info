@@ -2,8 +2,6 @@ package biomon;
 
 import java.io.Serializable;
 
-import gui.StarterChoiceMenu;
-
 public class Biomon implements Serializable {
 
 	/**
@@ -31,13 +29,13 @@ public class Biomon implements Serializable {
 			{ 8, 10, 12, 14, 16, 18, 19, 20, 22, 24, 26, 29, 32, 35, 38 } };
 
 	// all setters and getters
-	public static int chooseMyType() {
+	/* public static int chooseMyType() {
 		//new StarterChoiceMenu();
 		System.out.println("Choose your Biomon Type! (1) fluffy (2) slimy (3) crispy");
 		int decision;
 		decision = SystemInReader.readInt();
 		return decision;
-	}
+	}*/
 
 	// type 1 fluffy; type 2 slimy, type 3 crispy
 	public int calculateMaxHP() {
@@ -103,7 +101,7 @@ public class Biomon implements Serializable {
 
 		if (Math.random() * 100 < 20) {
 			crit = 1;
-			System.out.println("Critical hit!");
+			//System.out.println("Critical hit!");
 		}
 
 		if (type == 1) {
@@ -113,8 +111,8 @@ public class Biomon implements Serializable {
 		} else {
 			damage = crispyStats[crit][level];
 		}
-		System.out.println("Basic attack, " + damage + " damage dealt!");
-		System.out.println();
+		//System.out.println("Basic attack, " + damage + " damage dealt!");
+		//System.out.println();
 		return damage;
 	}
 
@@ -153,8 +151,8 @@ public class Biomon implements Serializable {
 			}
 		}
 
-		System.out.println("Special attack, " + damage + " damage dealt!");
-		System.out.println();
+		//System.out.println("Special attack, " + damage + " damage dealt!");
+		//System.out.println();
 		return damage;
 	}
 
@@ -179,8 +177,8 @@ public class Biomon implements Serializable {
 		level++;
 		maxHP = calculateMaxHP();
 		heal();
-		System.out.println("You won! Biomon level up: level " + printLevel() + ", max HP " + maxHP + ", current HP "
-				+ currentHP + "!");
+		//System.out.println("You won! Biomon level up: level " + printLevel() + ", max HP " + maxHP + ", current HP "
+		//		+ currentHP + "!");
 	}
 
 	public Biomon(int type, int level) {
