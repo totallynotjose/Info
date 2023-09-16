@@ -4,10 +4,6 @@ import java.io.Serializable;
 
 public class Biomon implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	// all the stats the Biomon need
 	// Biomon start at level (index) 0 (equals level 1)
 	private int maxHP, currentHP, type;
@@ -18,15 +14,15 @@ public class Biomon implements Serializable {
 	// 0 to
 	// 14)
 	// optional: would be nice to read these from a file to make it more readable
-	private int[][] fluffyStats = { { 10, 12, 14, 16, 18, 20, 21, 22, 23, 24, 26, 27, 28, 29, 30 },
-			{ 12, 14, 16, 18, 20, 25, 26, 27, 28, 29, 32, 33, 34, 35, 36 },
+	private int[][] fluffyStats = { { 10, 12, 16, 16, 18, 21, 21, 22, 24, 24, 26, 28, 28, 29, 31 },
+			{ 12, 14, 17, 18, 20, 26, 26, 27, 29, 29, 32, 34, 34, 35, 37 },
 			{ 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 33, 36, 39, 42, 44 } };
-	private int[][] slimyStats = { { 10, 11, 12, 13, 14, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25 },
+	private int[][] slimyStats = { { 10, 11, 14, 13, 14, 18, 17, 18, 21, 20, 21, 24, 23, 24, 26 },
 			{ 13, 14, 15, 16, 17, 23, 24, 25, 26, 27, 31, 32, 33, 34, 35 },
 			{ 9, 10, 10, 11, 12, 14, 16, 16, 18, 20, 23, 26, 29, 32, 36 } };
-	private int[][] crispyStats = { { 10, 11, 12, 13, 14, 15, 16, 16, 17, 18, 19, 20, 21, 22, 23 },
-			{ 12, 13, 14, 16, 16, 17, 18, 18, 19, 20, 22, 23, 24, 25, 26 },
-			{ 8, 10, 12, 14, 16, 18, 19, 20, 22, 24, 26, 29, 32, 35, 38 } };
+	private int[][] crispyStats = { { 8, 9, 10, 11, 12, 13, 14, 14, 15, 16, 17, 18, 19, 20, 21 },
+			{ 10, 11, 12, 14, 14, 15, 16, 16, 17, 18, 20, 21, 22, 23, 24 },
+			{ 8, 10, 11, 13, 15, 17, 18, 19, 20, 22, 24, 27, 30, 33, 36 } };
 
 	// all setters and getters
 	/* public static int chooseMyType() {
@@ -40,11 +36,11 @@ public class Biomon implements Serializable {
 	// type 1 fluffy; type 2 slimy, type 3 crispy
 	public int calculateMaxHP() {
 		if (type == 1) {
-			return (10 + 5 * level);
+			return (16 + 5 * level);
 		} else if (type == 2) {
-			return (20 + 5 * level);
+			return (22 + 5 * level);
 		} else {
-			return (30 + 5 * level);
+			return (30 + 4 * level);
 		}
 	}
 
@@ -158,12 +154,19 @@ public class Biomon implements Serializable {
 
 	// message "Healing successful not included here because healing is also used
 	// after you win a fight (message not needed there)
-	public void heal() {
-		currentHP = currentHP + (maxHP / 2);
+	public void heal() { 
+	if (type == 2| type == 3){
+		currentHP = currentHP + (maxHP / 3);
+	}
+		else if (type == 1) {
+			currentHP = currentHP + (maxHP /2);
+		}
 		if (currentHP > maxHP) {
 			currentHP = maxHP;
 		}
 	}
+
+	
 
 	public void setCurrentHP(int damage) {
 		currentHP = currentHP - damage;
@@ -178,7 +181,7 @@ public class Biomon implements Serializable {
 		maxHP = calculateMaxHP();
 		heal();
 		//System.out.println("You won! Biomon level up: level " + printLevel() + ", max HP " + maxHP + ", current HP "
-		//		+ currentHP + "!");
+		//	+ currentHP + "!");
 	}
 
 	public Biomon(int type, int level) {

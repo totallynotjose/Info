@@ -58,7 +58,7 @@ public class MainMenu extends JFrame {
 	 */
 	private JButton closebutton;
 	/**
-	 * This integer is used to communicate between the model and 
+	 * This integer is used to communicate between the model and control. 
 	 */
 	public int gameInput;
 
