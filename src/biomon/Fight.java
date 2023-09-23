@@ -1,5 +1,6 @@
 package biomon;
 
+import gui.FightMenu;
 import gui.GameOver;
 import gui.SaveOrContinue;
 
@@ -52,18 +53,21 @@ public class Fight {
 	 * currentHP 10 -> 10. more random numbers result in a heal
 	 */
 	private static void enemyAttack(Biomon myBiomon, Biomon enemyBiomon) {
-		int attack = (int) Math.random() * (2 + (enemyBiomon.getMaxHP() / enemyBiomon.getCurrentHP())) + 1;
+		int attack = (int) (Math.random() * (2 + (enemyBiomon.getMaxHP() / enemyBiomon.getCurrentHP())) + 1);
+		//System.out.println(attack);
 
 		switch (attack) {
 		case 1:
 			myBiomon.setCurrentHP(enemyBiomon.normalAttack());
+			FightMenu.enemyattacklabel.setText("Normal attack!");
 			break;
 		case 2:
 			myBiomon.setCurrentHP(enemyBiomon.specialAttack(myBiomon.getType()));
+			FightMenu.enemyattacklabel.setText("Special attack!");
 			break;
 		default:
 			enemyBiomon.heal();
-			//System.out.println("Healing successful!");
+			FightMenu.enemyattacklabel.setText("Heal!");
 			break;
 		}
 	}
@@ -116,14 +120,34 @@ public class Fight {
 			if (turn % 2 == 0) {
 				//System.out.println("Your turn!");
 				myAttack(myBiomon, enemyBiomon, myAttack);
+				if (Biomon.crit == 1) {
+					FightMenu.playercritlabel.setText("Critical hit!");
+				} else {
+					FightMenu.playercritlabel.setText("");
+				}
 				if (enemyBiomon.getCurrentHP() > 0) {
 					enemyAttack(myBiomon, enemyBiomon);
+					if (Biomon.crit == 1) {
+						FightMenu.enemycritlabel.setText("Critical hit!");
+					} else {
+						FightMenu.enemycritlabel.setText("");
+					}
 				}
 			} else {
 				//System.out.println("Enemy turn!");
 				enemyAttack(myBiomon, enemyBiomon);
+				if (Biomon.crit == 1) {
+					FightMenu.playercritlabel.setText("Critical hit!");
+				} else {
+					FightMenu.playercritlabel.setText("");
+				}
 				if (myBiomon.getCurrentHP() > 0) {
 					myAttack(myBiomon, enemyBiomon, myAttack);
+					if (Biomon.crit == 1) {
+						FightMenu.enemycritlabel.setText("Critical hit!");
+					} else {
+						FightMenu.enemycritlabel.setText("");
+					}
 				}
 			}
 			turn++;

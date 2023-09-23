@@ -68,6 +68,22 @@ public class FightMenu extends JFrame {
 	 */
 	private JLabel enemytextlabel;
 	/**
+	 * This label includes the information about what attack the player chose.
+	 */
+	private JLabel playerattacklabel;
+	/**
+	 * This label includes the information about what attack the enemy chose.
+	 */
+	public static JLabel enemyattacklabel;
+	/**
+	 * This label includes the information about if the player got a critical hit.
+	 */
+	public static JLabel playercritlabel;
+	/**
+	 * This label includes the information about if the enemy got a critical hit.
+	 */
+	public static JLabel enemycritlabel;
+	/**
 	 * This label includes the ImageIcon of the player's Biomon.
 	 */
 	private JLabel playerlabel;
@@ -134,6 +150,10 @@ public class FightMenu extends JFrame {
 		backgroundpanel = new BackgroundPanel();
 		playertextlabel = new JLabel();
 		enemytextlabel = new JLabel();
+		playerattacklabel = new JLabel();
+		enemyattacklabel = new JLabel();
+		playercritlabel = new JLabel();
+		enemycritlabel = new JLabel();
 		playerlabel = new JLabel();
 		enemylabel = new JLabel();
 		playerbar = new JProgressBar();
@@ -160,6 +180,34 @@ public class FightMenu extends JFrame {
 		enemytextlabel.setBounds(470, 10, 700, 50);
 		enemylabel.setOpaque(true);
 		this.add(enemytextlabel);
+		
+		// label with information about what attack the player chose
+		playerattacklabel.setText("");
+		playerattacklabel.setFont(new Font("Bahnschrift", Font.BOLD, 13));
+		playerattacklabel.setForeground(Color.WHITE);
+		playerattacklabel.setBounds(245, 150, 200, 50);
+		this.add(playerattacklabel);
+		
+		// label with information about what attack the enemy chose
+		enemyattacklabel.setText("");
+		enemyattacklabel.setFont(new Font("Bahnschrift", Font.BOLD, 13));
+		enemyattacklabel.setForeground(Color.WHITE);
+		enemyattacklabel.setBounds(350, 225, 200, 50);
+		this.add(enemyattacklabel);
+		
+		// label with information about if the player got a critical hit
+		playercritlabel.setText("");
+		playercritlabel.setFont(new Font("Bahnschrift", Font.BOLD, 13));
+		playercritlabel.setForeground(Color.WHITE);
+		playercritlabel.setBounds(245, 175, 200, 50);
+		this.add(playercritlabel);
+		
+		// label with information about if the enemy got a critical hit
+		enemycritlabel.setText("");
+		enemycritlabel.setFont(new Font("Bahnschrift", Font.BOLD, 13));
+		enemycritlabel.setForeground(Color.WHITE);
+		enemycritlabel.setBounds(350, 250, 200, 50);
+		this.add(enemycritlabel);
 
 		// switch to determine which ImageIcon to use for the player's Biomon
 		switch (Game.biomonInstance.getType()) {
@@ -272,6 +320,8 @@ public class FightMenu extends JFrame {
 		attack1button.setForeground(Color.DARK_GRAY);
 		attack1button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				playerattacklabel.setText("Normal attack!");
+				
 				Fight.myAttack = 1;
 				Game.fight();
 
@@ -293,6 +343,7 @@ public class FightMenu extends JFrame {
 		attack2button.setForeground(Color.DARK_GRAY);
 		attack2button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				playerattacklabel.setText("Special attack!");
 				Fight.myAttack = 2;
 
 				Game.fight();
@@ -315,6 +366,7 @@ public class FightMenu extends JFrame {
 		healbutton.setForeground(Color.DARK_GRAY);
 		healbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				playerattacklabel.setText("Heal!");
 				Fight.myAttack = 3;
 
 				Game.fight();

@@ -8,6 +8,7 @@ public class Biomon implements Serializable {
 	// Biomon start at level (index) 0 (equals level 1)
 	private int maxHP, currentHP, type;
 	private int level = 0;
+	public static int crit;
 
 	// stats for attacks
 	// normal attack, critical normal attack, special attack (levels 1 to 15; index
@@ -93,7 +94,8 @@ public class Biomon implements Serializable {
 	// if the random number is less than 20, a critical hit is made
 	// normal attack damage has the index 0, critical damage has index 1
 	public int normalAttack() {
-		int damage, crit = 0;
+		int damage = 0;
+		crit = 0;
 
 		if (Math.random() * 100 < 20) {
 			crit = 1;
@@ -119,6 +121,7 @@ public class Biomon implements Serializable {
 	 */
 	public int specialAttack(int enemyType) {
 		int damage;
+		crit = 0;
 		if (type == 1) {
 			// for fluffy: effective against crispy, not effective against slimy
 			if (type == enemyType) {
@@ -155,6 +158,7 @@ public class Biomon implements Serializable {
 	// message "Healing successful not included here because healing is also used
 	// after you win a fight (message not needed there)
 	public void heal() { 
+	crit = 0;
 	if (type == 2| type == 3){
 		currentHP = currentHP + (maxHP / 3);
 	}
