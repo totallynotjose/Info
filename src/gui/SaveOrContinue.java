@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import biomon.Biomon;
 import biomon.Enums;
@@ -25,8 +26,8 @@ import biomon.services.SaveService;
  * 
  */
 
-public class SaveOrContinue extends JFrame{
-	
+public class SaveOrContinue extends JFrame {
+
 	/**
 	 * 
 	 */
@@ -42,59 +43,83 @@ public class SaveOrContinue extends JFrame{
 	/**
 	 * This label includes the occasional sentence "YOUR BIOMON EVOLVED!".
 	 */
-	private JLabel evolutionlabel
+	private JLabel evolutionlabel;
+	/**
+	 * This label includes the occasional sentence "YOU HAVE REACHED THE MAXIMUM LEVEL!".
+	 */
+	private JLabel winninglabel;
 	/**
 	 * This ImageIcon is the icon shown in the upper left corner of the frame.
-	 */;
+	 */
 	private ImageIcon iconimageicon;
 	/**
 	 * This background panel enables the use of a background image.
 	 */
 	private BackgroundPanel backgroundpanel;
 	/**
+	 * This button saves the progress and returns to the main menu.
+	 */
+	private JButton savebutton;
+	/**
 	 * This button continues the program.
 	 */
 	private JButton continuebutton;
 	/**
-	 * This button saves the progress and returns to the main menu.
+	 * This button lets the player return to the main menu after reaching the maximum level.
 	 */
-	private JButton savebutton;
+	private JButton returnbutton;
 
 	/**
 	 * This method creates a JFrame, initializes the components and adds them to the
 	 * frame.
 	 */
 	public SaveOrContinue() {
-		
+
 		// initializing of components
 		iconimageicon = new ImageIcon("Icon.png");
 		backgroundpanel = new BackgroundPanel();
 		text1label = new JLabel();
 		text2label = new JLabel();
 		evolutionlabel = new JLabel();
+		winninglabel = new JLabel();
 		savebutton = new JButton("Save and return to Main Menu");
 		continuebutton = new JButton("Continue Game");
-		
+		returnbutton = new JButton("Return to Main Menu");
+
 		// label informing the player that their Biomon has evolved
 		if (Game.biomonInstance.getLevel() == 4 || Game.biomonInstance.getLevel() == 9) {
-		evolutionlabel.setText("YOUR BIOMON EVOLVED!");
-		evolutionlabel.setFont(new Font("Bahnschrift", Font.BOLD, 50));
-		evolutionlabel.setForeground(Color.WHITE);
-		evolutionlabel.setBounds(50, 25, 700, 100);
-		evolutionlabel.setOpaque(false);
-		this.add(evolutionlabel);
+			evolutionlabel.setText("YOUR BIOMON EVOLVED!");
+			evolutionlabel.setFont(new Font("Bahnschrift", Font.BOLD, 50));
+			evolutionlabel.setForeground(Color.WHITE);
+			evolutionlabel.setBounds(50, 75, 700, 100);
+			evolutionlabel.setOpaque(false);
+			this.add(evolutionlabel);
 		}
 		
+		if (Game.biomonInstance.getLevel() == 14) {
+			winninglabel.setText("YOU'VE REACHED THE END!");
+			winninglabel.setFont(new Font("Bahnschrift", Font.BOLD, 50));
+			winninglabel.setForeground(Color.WHITE);
+			winninglabel.setBounds(15, 75, 700, 100);
+			winninglabel.setOpaque(false);
+			this.add(winninglabel);
+		}
+
 		// label informing the player of their win
 		text1label.setText("YOU WON!");
 		text1label.setFont(new Font("Bahnschrift", Font.BOLD, 50));
 		text1label.setForeground(Color.WHITE);
-		text1label.setBounds(230, 75, 700, 100);
+		text1label.setBounds(230, 25, 700, 100);
 		text1label.setOpaque(false);
 		this.add(text1label);
-		
-		// label asking the player whether to save and return to the main menu or continue
+
+		// label asking the player whether to save and return to the main menu or
+		// continue
+		if (Game.biomonInstance.getLevel() == 14) {
+			text2label.setText("CONGRATULATIONS!");
+		} else {
 		text2label.setText("SAVE OR CONTINUE?");
+		}
 		text2label.setFont(new Font("Bahnschrift", Font.BOLD, 50));
 		text2label.setForeground(Color.WHITE);
 		text2label.setBounds(100, 125, 700, 100);
@@ -102,6 +127,7 @@ public class SaveOrContinue extends JFrame{
 		this.add(text2label);
 
 		// button for saving and returning to the main menu
+		if (Game.biomonInstance.getLevel() < 14) {
 		savebutton.setBounds(200, 280, 300, 50);
 		savebutton.setFocusable(false);
 		savebutton.setFont(new Font("Bahnschrift", Font.BOLD, 16));
@@ -109,14 +135,19 @@ public class SaveOrContinue extends JFrame{
 		savebutton.setForeground(Color.DARK_GRAY);
 		savebutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				SaveService.saveBiomonToFile(Game.biomonInstance);
-				Game.game = Enums.RunningStates.PAUSE;
-				SaveOrContinue.this.dispose();
-				new MainMenu();
+				if (JOptionPane.showOptionDialog(null,
+						"Do you want to save and return to the main menu? You will not be healed the next round.",
+						"Save Game?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+						new String[] { "Yes", "No" }, "") == JOptionPane.YES_OPTION) {
+					SaveService.saveBiomonToFile(Game.biomonInstance);
+					Game.game = Enums.RunningStates.PAUSE;
+					SaveOrContinue.this.dispose();
+					new MainMenu();
+				}
 			}
 		});
 		this.add(savebutton);
-		
+
 		// button for continuing the game
 		continuebutton.setBounds(200, 340, 300, 50);
 		continuebutton.setFocusable(false);
@@ -125,14 +156,37 @@ public class SaveOrContinue extends JFrame{
 		continuebutton.setForeground(Color.DARK_GRAY);
 		continuebutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Game.game = Enums.RunningStates.RUNNING;
-				Game.enemyInstance = new Biomon(Game.biomonInstance.getLevel());
-				SaveOrContinue.this.dispose();
-				Game.fightMenu = new FightMenu();
+				if (JOptionPane.showOptionDialog(null,
+						"Do you want to continue without saving? You will be partially healed the next round.",
+						"Continue Game?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+						new String[] { "Yes", "No" }, "") == JOptionPane.YES_OPTION) {
+					Game.biomonInstance.heal();
+					Game.game = Enums.RunningStates.RUNNING;
+					Game.enemyInstance = new Biomon(Game.biomonInstance.getLevel());
+					SaveOrContinue.this.dispose();
+					Game.fightMenu = new FightMenu();
+				}
 			}
 		});
 		this.add(continuebutton);
-
+		} 
+		
+		else {
+			returnbutton.setBounds(200, 280, 300, 50);
+			returnbutton.setFocusable(false);
+			returnbutton.setFont(new Font("Bahnschrift", Font.BOLD, 16));
+			returnbutton.setBackground(Color.WHITE);
+			returnbutton.setForeground(Color.DARK_GRAY);
+			returnbutton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+						Game.game = Enums.RunningStates.PAUSE;
+						SaveOrContinue.this.dispose();
+						new MainMenu();
+					}
+			});
+			this.add(returnbutton);
+		}
+		
 		// settings for JFrame
 		this.setIconImage(iconimageicon.getImage()); // changes icon of the frame
 		this.setTitle("Biomon"); // sets title of frame to "Biomon"
@@ -143,4 +197,5 @@ public class SaveOrContinue extends JFrame{
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // sets default close operation to exit on close
 		this.add(backgroundpanel);
 		this.setVisible(true); // sets frame to visible
-}}
+	}
+}

@@ -2,6 +2,7 @@ package biomon;
 
 import gui.FightMenu;
 import gui.GameOver;
+import gui.MainMenu;
 import gui.SaveOrContinue;
 
 public class Fight {
@@ -169,3 +170,4 @@ public class Fight {
 	}
 
 }
+

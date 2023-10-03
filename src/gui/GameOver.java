@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  * This class serves as graphical representation of the game over screen with
@@ -76,8 +77,12 @@ public class GameOver extends JFrame {
 		returnbutton.setForeground(Color.DARK_GRAY);
 		returnbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				GameOver.this.dispose();
-				new MainMenu();
+				if (JOptionPane.showOptionDialog(null, "Do you want to return to the main menu?",
+						"Return to Main Menu?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+						new String[] { "Yes", "No" }, "") == JOptionPane.YES_OPTION) {
+					GameOver.this.dispose();
+					new MainMenu();
+				}
 			}
 		});
 		this.add(returnbutton);
@@ -90,7 +95,11 @@ public class GameOver extends JFrame {
 		closebutton.setForeground(Color.DARK_GRAY);
 		closebutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				GameOver.this.dispose();
+				if (JOptionPane.showOptionDialog(null, "Do you want to close the program?", "Close Program?",
+						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[] { "Yes", "No" },
+						"") == JOptionPane.YES_OPTION) {
+					GameOver.this.dispose();
+				}
 			}
 		});
 		this.add(closebutton);

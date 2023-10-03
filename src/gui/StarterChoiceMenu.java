@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import biomon.Game;
 
@@ -75,9 +76,22 @@ public class StarterChoiceMenu extends JFrame {
 	 * This button chooses crispy as the starter.
 	 */
 	private JButton crispybutton;
+	/**
+	 * This button explains the fluffy type to the player.
+	 */
+	private JButton helpfluffybutton;
+	/**
+	 * This button explains the slimy type to the player.
+	 */
+	private JButton helpslimybutton;
+	/**
+	 * This button explains the crispy type to the player.
+	 */
+	private JButton helpcrispybutton;
 
 	/**
-	 * This method creates a JFrame, initializes the components and adds them to the frame.
+	 * This method creates a JFrame, initializes the components and adds them to the
+	 * frame.
 	 */
 	public StarterChoiceMenu() {
 
@@ -94,6 +108,9 @@ public class StarterChoiceMenu extends JFrame {
 		fluffybutton = new JButton("Fluffy");
 		slimybutton = new JButton("Slimy");
 		crispybutton = new JButton("Crispy");
+		helpfluffybutton = new JButton("?");
+		helpslimybutton = new JButton("?");
+		helpcrispybutton = new JButton("?");
 
 		// label including information for player
 		textlabel.setText("Choose one of the Biomon shown below by clicking on one of the buttons!");
@@ -122,46 +139,100 @@ public class StarterChoiceMenu extends JFrame {
 		this.add(crispylabel);
 
 		// button for choosing fluffy
-		fluffybutton.setBounds(10, 380, 200, 50);
+		fluffybutton.setBounds(10, 380, 155, 50);
 		fluffybutton.setFocusable(false);
 		fluffybutton.setFont(new Font("Bahnschrift", Font.BOLD, 16));
 		fluffybutton.setBackground(Color.WHITE);
 		fluffybutton.setForeground(Color.DARK_GRAY);
 		fluffybutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				StarterChoiceMenu.this.dispose();
-				Game.startGame(1);
+				if (JOptionPane.showOptionDialog(null, "Do you want to choose the fluffy type?", "Choose Fluffy Type?",
+						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[] { "Yes", "No" },
+						"") == JOptionPane.YES_OPTION) {
+					StarterChoiceMenu.this.dispose();
+					Game.startGame(1);
+				}
 			}
 		});
 		this.add(fluffybutton);
 
 		// button for choosing slimy
-		slimybutton.setBounds(242, 380, 200, 50);
+		slimybutton.setBounds(242, 380, 155, 50);
 		slimybutton.setFocusable(false);
 		slimybutton.setFont(new Font("Bahnschrift", Font.BOLD, 16));
 		slimybutton.setBackground(Color.WHITE);
 		slimybutton.setForeground(Color.DARK_GRAY);
 		slimybutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				StarterChoiceMenu.this.dispose();
-				Game.startGame(2);
+				if (JOptionPane.showOptionDialog(null, "Do you want to choose the slimy type?", "Choose Slimy Type?",
+						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[] { "Yes", "No" },
+						"") == JOptionPane.YES_OPTION) {
+					StarterChoiceMenu.this.dispose();
+					Game.startGame(2);
+				}
 			}
 		});
 		this.add(slimybutton);
 
 		// button for choosing crispy
-		crispybutton.setBounds(475, 380, 200, 50);
+		crispybutton.setBounds(475, 380, 155, 50);
 		crispybutton.setFocusable(false);
 		crispybutton.setFont(new Font("Bahnschrift", Font.BOLD, 16));
 		crispybutton.setBackground(Color.WHITE);
 		crispybutton.setForeground(Color.DARK_GRAY);
 		crispybutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				StarterChoiceMenu.this.dispose();
-				Game.startGame(3);
+				if (JOptionPane.showOptionDialog(null, "Do you want to choose the crispy type?", "Choose Crispy Type?",
+						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[] { "Yes", "No" },
+						"") == JOptionPane.YES_OPTION) {
+					StarterChoiceMenu.this.dispose();
+					Game.startGame(3);
+				}
 			}
 		});
 		this.add(crispybutton);
+
+		// button for informing the player
+		helpfluffybutton.setBounds(165, 380, 45, 50);
+		helpfluffybutton.setFocusable(false);
+		helpfluffybutton.setFont(new Font("Bahnschrift", Font.BOLD, 16));
+		helpfluffybutton.setBackground(Color.WHITE);
+		helpfluffybutton.setForeground(Color.DARK_GRAY);
+		helpfluffybutton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null,
+						"Biomon of this type are offensive and fast. They excel against crispy types.", "Fluffy Explained", JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		this.add(helpfluffybutton);
+
+		// button for informing the player
+		helpslimybutton.setBounds(397, 380, 45, 50);
+		helpslimybutton.setFocusable(false);
+		helpslimybutton.setFont(new Font("Bahnschrift", Font.BOLD, 16));
+		helpslimybutton.setBackground(Color.WHITE);
+		helpslimybutton.setForeground(Color.DARK_GRAY);
+		helpslimybutton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null,
+						"Biomon of this type are balanced. They excel against fluffy types.", "Slimy Explained", JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		this.add(helpslimybutton);
+
+		// button for informing the player
+		helpcrispybutton.setBounds(630, 380, 45, 50);
+		helpcrispybutton.setFocusable(false);
+		helpcrispybutton.setFont(new Font("Bahnschrift", Font.BOLD, 16));
+		helpcrispybutton.setBackground(Color.WHITE);
+		helpcrispybutton.setForeground(Color.DARK_GRAY);
+		helpcrispybutton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null,
+						"Biomon of this type are defensive and slow. They excel against slimy types.", "Crispy Explained", JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		this.add(helpcrispybutton);
 
 		// settings for JFrame
 		this.setIconImage(iconimageicon.getImage());

@@ -5,10 +5,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
+
 import biomon.Fight;
 import biomon.Game;
 
@@ -112,10 +109,22 @@ public class FightMenu extends JFrame {
 	 */
 	private JButton healbutton;
 	/**
+	 * This button explains the normal attack to the player.
+	 */
+	private JButton helpattackbutton;
+	/**
+	 * This button explains the special attack to the player.
+	 */
+	private JButton helpspecialattackbutton;
+	/**
+	 * This button explains healing to the player.
+	 */
+	private JButton helphealbutton;
+	/**
 	 * This integer determines the current state of the HP bar of the player's
 	 * Biomon at the beginning of each.
 	 */
-	int playercounter;
+	private int playercounter;
 
 	/**
 	 * This method creates a JFrame, initializes the components and adds them to the
@@ -161,6 +170,9 @@ public class FightMenu extends JFrame {
 		attack1button = new JButton("attack");
 		attack2button = new JButton("special attack");
 		healbutton = new JButton("heal");
+		helpattackbutton = new JButton("?");
+		helpspecialattackbutton = new JButton("?");
+		helphealbutton = new JButton("?");
 
 		// initializing the playercounter by determining the percentage of maximum HP
 		playercounter = 100 * Game.biomonInstance.getCurrentHP() / Game.biomonInstance.getMaxHP();
@@ -180,28 +192,28 @@ public class FightMenu extends JFrame {
 		enemytextlabel.setBounds(470, 10, 700, 50);
 		enemylabel.setOpaque(true);
 		this.add(enemytextlabel);
-		
+
 		// label with information about what attack the player chose
 		playerattacklabel.setText("");
 		playerattacklabel.setFont(new Font("Bahnschrift", Font.BOLD, 13));
 		playerattacklabel.setForeground(Color.WHITE);
 		playerattacklabel.setBounds(245, 150, 200, 50);
 		this.add(playerattacklabel);
-		
+
 		// label with information about what attack the enemy chose
 		enemyattacklabel.setText("");
 		enemyattacklabel.setFont(new Font("Bahnschrift", Font.BOLD, 13));
 		enemyattacklabel.setForeground(Color.WHITE);
 		enemyattacklabel.setBounds(350, 225, 200, 50);
 		this.add(enemyattacklabel);
-		
+
 		// label with information about if the player got a critical hit
 		playercritlabel.setText("");
 		playercritlabel.setFont(new Font("Bahnschrift", Font.BOLD, 13));
 		playercritlabel.setForeground(Color.WHITE);
 		playercritlabel.setBounds(245, 175, 200, 50);
 		this.add(playercritlabel);
-		
+
 		// label with information about if the enemy got a critical hit
 		enemycritlabel.setText("");
 		enemycritlabel.setFont(new Font("Bahnschrift", Font.BOLD, 13));
@@ -313,7 +325,7 @@ public class FightMenu extends JFrame {
 
 		// button for an ordinary attack
 		// will trigger the fight method and update HP bars as well as the info
-		attack1button.setBounds(10, 380, 200, 50);
+		attack1button.setBounds(10, 380, 155, 50);
 		attack1button.setFocusable(false);
 		attack1button.setFont(new Font("Bahnschrift", Font.BOLD, 16));
 		attack1button.setBackground(Color.WHITE);
@@ -321,7 +333,7 @@ public class FightMenu extends JFrame {
 		attack1button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				playerattacklabel.setText("Normal attack!");
-				
+
 				Fight.myAttack = 1;
 				Game.fight();
 
@@ -336,7 +348,7 @@ public class FightMenu extends JFrame {
 
 		// button for a special attack
 		// will trigger the fight method and update HP bars as well as the info
-		attack2button.setBounds(242, 380, 200, 50);
+		attack2button.setBounds(242, 380, 155, 50);
 		attack2button.setFocusable(false);
 		attack2button.setFont(new Font("Bahnschrift", Font.BOLD, 16));
 		attack2button.setBackground(Color.WHITE);
@@ -359,7 +371,7 @@ public class FightMenu extends JFrame {
 
 		// button for healing
 		// will trigger the fight method and update HP bars as well as the info
-		healbutton.setBounds(475, 380, 200, 50);
+		healbutton.setBounds(475, 380, 155, 50);
 		healbutton.setFocusable(false);
 		healbutton.setFont(new Font("Bahnschrift", Font.BOLD, 16));
 		healbutton.setBackground(Color.WHITE);
@@ -379,6 +391,50 @@ public class FightMenu extends JFrame {
 			}
 		});
 		this.add(healbutton);
+
+		// button for informing the player
+		helpattackbutton.setBounds(165, 380, 45, 50);
+		helpattackbutton.setFocusable(false);
+		helpattackbutton.setFont(new Font("Bahnschrift", Font.BOLD, 16));
+		helpattackbutton.setBackground(Color.WHITE);
+		helpattackbutton.setForeground(Color.DARK_GRAY);
+		helpattackbutton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null,
+						"An attack that deals damage regardless of typing. There can be critical hits!",
+						"Attack Explained", JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		this.add(helpattackbutton);
+
+		// button for informing the player
+		helpspecialattackbutton.setBounds(397, 380, 45, 50);
+		helpspecialattackbutton.setFocusable(false);
+		helpspecialattackbutton.setFont(new Font("Bahnschrift", Font.BOLD, 16));
+		helpspecialattackbutton.setBackground(Color.WHITE);
+		helpspecialattackbutton.setForeground(Color.DARK_GRAY);
+		helpspecialattackbutton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null,
+						"An attack that deals damage depending on your and the opponent's type.",
+						"Special Attack Explained", JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		this.add(helpspecialattackbutton);
+
+		// button for informing the player
+		helphealbutton.setBounds(630, 380, 45, 50);
+		helphealbutton.setFocusable(false);
+		helphealbutton.setFont(new Font("Bahnschrift", Font.BOLD, 16));
+		helphealbutton.setBackground(Color.WHITE);
+		helphealbutton.setForeground(Color.DARK_GRAY);
+		helphealbutton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "This command will heal your biomon with 50 % of its maximum HP.",
+						"Healing Explained", JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		this.add(helphealbutton);
 
 		// settings for JFrame
 		this.setIconImage(iconimageicon.getImage());

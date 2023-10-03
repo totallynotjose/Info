@@ -2,6 +2,7 @@ package biomon;
 
 import biomon.services.SaveService;
 import gui.FightMenu;
+import gui.MainMenu;
 import gui.StarterChoiceMenu;
 
 public class Game {
@@ -43,7 +44,7 @@ public class Game {
 				biomonInstance = loadGame(Enums.SaveStates.EXISTING_GAME);
 			}
 		}
-		// new FightMenu();
+		MainMenu.biomonInstanceCreated = true;
 		game = Enums.RunningStates.RUNNING;
 		enemyInstance = new Biomon(biomonInstance.getLevel());
 		fightMenu = new FightMenu();

@@ -2,6 +2,8 @@ package biomon;
 
 import java.io.Serializable;
 
+import gui.MainMenu;
+
 public class Biomon implements Serializable {
 
 	// all the stats the Biomon need
@@ -26,13 +28,11 @@ public class Biomon implements Serializable {
 			{ 8, 10, 11, 13, 15, 17, 18, 19, 20, 22, 24, 27, 30, 33, 36 } };
 
 	// all setters and getters
-	/* public static int chooseMyType() {
-		//new StarterChoiceMenu();
-		System.out.println("Choose your Biomon Type! (1) fluffy (2) slimy (3) crispy");
-		int decision;
-		decision = SystemInReader.readInt();
-		return decision;
-	}*/
+	/*
+	 * public static int chooseMyType() { //new StarterChoiceMenu();
+	 * System.out.println("Choose your Biomon Type! (1) fluffy (2) slimy (3) crispy"
+	 * ); int decision; decision = SystemInReader.readInt(); return decision; }
+	 */
 
 	// type 1 fluffy; type 2 slimy, type 3 crispy
 	public int calculateMaxHP() {
@@ -51,10 +51,16 @@ public class Biomon implements Serializable {
 	 * level starts at 0. But for printing you want the actual level, not the index
 	 */
 	public int getLevel() {
+		if (level > 14) {
+			level = 14;
+		}
 		return level;
 	}
 
 	public int printLevel() {
+		if (level > 14) {
+			level = 14;
+		}
 		return (level + 1);
 	}
 
@@ -99,7 +105,7 @@ public class Biomon implements Serializable {
 
 		if (Math.random() * 100 < 20) {
 			crit = 1;
-			//System.out.println("Critical hit!");
+			// System.out.println("Critical hit!");
 		}
 
 		if (type == 1) {
@@ -109,8 +115,8 @@ public class Biomon implements Serializable {
 		} else {
 			damage = crispyStats[crit][level];
 		}
-		//System.out.println("Basic attack, " + damage + " damage dealt!");
-		//System.out.println();
+		// System.out.println("Basic attack, " + damage + " damage dealt!");
+		// System.out.println();
 		return damage;
 	}
 
@@ -150,27 +156,24 @@ public class Biomon implements Serializable {
 			}
 		}
 
-		//System.out.println("Special attack, " + damage + " damage dealt!");
-		//System.out.println();
+		// System.out.println("Special attack, " + damage + " damage dealt!");
+		// System.out.println();
 		return damage;
 	}
 
 	// message "Healing successful not included here because healing is also used
 	// after you win a fight (message not needed there)
-	public void heal() { 
-	crit = 0;
-	if (type == 2| type == 3){
-		currentHP = currentHP + (maxHP / 3);
-	}
-		else if (type == 1) {
-			currentHP = currentHP + (maxHP /2);
+	public void heal() {
+		crit = 0;
+		if (type == 2 | type == 3) {
+			currentHP = currentHP + (maxHP / 3);
+		} else if (type == 1) {
+			currentHP = currentHP + (maxHP / 2);
 		}
 		if (currentHP > maxHP) {
 			currentHP = maxHP;
 		}
 	}
-
-	
 
 	public void setCurrentHP(int damage) {
 		currentHP = currentHP - damage;
@@ -181,11 +184,13 @@ public class Biomon implements Serializable {
 
 	// if you win you level up and heal up to 50% of your new maxHP
 	public void levelUp() {
-		level++;
-		maxHP = calculateMaxHP();
-		heal();
-		//System.out.println("You won! Biomon level up: level " + printLevel() + ", max HP " + maxHP + ", current HP "
-		//	+ currentHP + "!");
+		if (level < 14) {
+			level++;
+			maxHP = calculateMaxHP();
+		}
+		// System.out.println("You won! Biomon level up: level " + printLevel() + ", max
+		// HP " + maxHP + ", current HP "
+		// + currentHP + "!");
 	}
 
 	public Biomon(int type, int level) {

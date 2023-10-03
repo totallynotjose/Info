@@ -8,7 +8,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import biomon.Game;
+import biomon.services.HighscoreSaveService;
 
 /**
  * This class serves as graphical representation of the main menu.
@@ -58,15 +60,24 @@ public class MainMenu extends JFrame {
 	 */
 	private JButton closebutton;
 	/**
-	 * This integer is used to communicate between the model and control. 
+	 * This integer is used to communicate between the model and control.
 	 */
 	public int gameInput;
+	/**
+	 * This integer is used as a high score.
+	 */
+	public int highscore = 0;
+	/**
+	 * This boolean checks whether a biomon instance exists in Game.
+	 */
+	public static boolean biomonInstanceCreated = false;
 
 	/**
-	 * This method creates a JFrame, initializes the components and adds them to the frame.
+	 * This method creates a JFrame, initializes the components and adds them to the
+	 * frame.
 	 */
 	public MainMenu() {
-
+	
 		// initializing of components
 		iconimageicon = new ImageIcon("Icon.png");
 		logoimageicon = new ImageIcon("Logo.png");
@@ -77,9 +88,26 @@ public class MainMenu extends JFrame {
 		continuebutton = new JButton("Continue Game");
 		closebutton = new JButton("Close Program");
 		gameInput = 0;
+		
+		// initializing of high score
+		// is 0 if there is no pre-existing high score and the saved integer if there is
+		// if the player achieves a new high score a new high score is saved
+		if (!HighscoreSaveService.isHighscoreSaveFileExisting()) {
+			highscore = 0;
+			HighscoreSaveService.createHighscoreSaveFile();
+			HighscoreSaveService.saveHighscoreToFile(highscore);
+		} else {
+			highscore = HighscoreSaveService.readHighscoreFromFile();
+			if (biomonInstanceCreated == true) {
+				if (Game.biomonInstance.getLevel() > highscore) {
+					highscore = Game.biomonInstance.getLevel();
+					HighscoreSaveService.saveHighscoreToFile(highscore);
+				}
+			}
+		}
 
 		// label for high score
-		textlabel.setText("High Score: [n]");
+		textlabel.setText("High Score: " + highscore);
 		textlabel.setFont(new Font("Bahnschrift", Font.BOLD, 18));
 		textlabel.setForeground(Color.WHITE);
 		textlabel.setBounds(287, 212, 200, 50);
@@ -100,8 +128,12 @@ public class MainMenu extends JFrame {
 		startbutton.setForeground(Color.DARK_GRAY);
 		startbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MainMenu.this.dispose();
-				new StarterChoiceMenu();
+				if (JOptionPane.showOptionDialog(null, "Do you want to start a new game?", "Start New Game?",
+						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[] { "Yes", "No" },
+						"") == JOptionPane.YES_OPTION) {
+					MainMenu.this.dispose();
+					new StarterChoiceMenu();
+				}
 			}
 		});
 		this.add(startbutton);
@@ -114,8 +146,12 @@ public class MainMenu extends JFrame {
 		continuebutton.setForeground(Color.DARK_GRAY);
 		continuebutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MainMenu.this.dispose();
-				Game.startGame(0);
+				if (JOptionPane.showOptionDialog(null, "Do you want to continue an existing game?", "Continue Game?",
+						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[] { "Yes", "No" },
+						"") == JOptionPane.YES_OPTION) {
+					MainMenu.this.dispose();
+					Game.startGame(0);
+				}
 			}
 		});
 		this.add(continuebutton);
@@ -128,7 +164,11 @@ public class MainMenu extends JFrame {
 		closebutton.setForeground(Color.DARK_GRAY);
 		closebutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MainMenu.this.dispose();
+				if (JOptionPane.showOptionDialog(null, "Do you want to close the program?", "Close Program?",
+						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[] { "Yes", "No" },
+						"") == JOptionPane.YES_OPTION) {
+					MainMenu.this.dispose();
+				}
 			}
 		});
 		this.add(closebutton);
@@ -143,6 +183,5 @@ public class MainMenu extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.add(backgroundpanel);
 		this.setVisible(true);
-
 	}
 }
