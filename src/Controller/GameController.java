@@ -8,30 +8,38 @@ import view.FightMenuView;
 import view.MainMenuView;
 import view.StarterChoiceMenuView;
 
+/**
+ * This class includes all the data and methods in regard to the Biomon.
+ * 
+ * @author Lennart Alexander Brockmann
+ * @author Josephine Franke
+ * @author Kay Kiontke
+ * 
+ */
+
 public class GameController {
 	/**
-	 * The current game state.
+	 * This is the current game state.
 	 */
 	public static Enums.RunningStates game;
 
 	/**
-	 * The instance of the Biomon and enemy characters in the game.
+	 * This is the instances of the Biomons of the player and the opponent.
 	 */
 	public static Biomon biomonInstance;
 	public static Biomon enemyInstance;
 
 	/**
-	 * The instance of the fight menu.
+	 * This is the instance of the fight menu.
 	 */
 	public static FightMenuView fightMenu;
 	
 	
 	/**
-	 * Starts the game and prompts the user to choose a new game or continue with
+	 * This method starts the game and prompts the user to choose a new game or continue with
 	 * their progress. It initializes the Biomon instance based on the user's choice
 	 * and sets the game state to running.
 	 */
-
 	public static void startGame(int gameInput) {
 
 		if (gameInput == 1) {
@@ -68,43 +76,12 @@ public class GameController {
 	}
 
 	/**
-	 * Initiates a fight between the player's Biomon and a randomly generated
+	 * This method initiates a fight between the player's Biomon and a randomly generated
 	 * opponent Biomon. If the player's Biomon wins the fight, it levels up and
 	 * prompts the user to save or continue the game. If the player's Biomon loses
 	 * the fight, the game state is set to GAME_OVER.
 	 */
 	public static void fight() {
-		//enemyInstance = new Biomon(biomonInstance.getLevel());
 		FightService.ThisFight(biomonInstance, enemyInstance);
-
-		/*if (biomonInstance.getCurrentHP() > 0) {
-			biomonInstance.levelUp();
-
-			saveOrContinueGame();
-		} else {
-			new GameOver();
-			game = Enums.RunningStates.GAME_OVER;
-		}*/
 	}
-
-	/**
-	 * Prompts the user to save their progress and return to the main screen. The
-	 * user's choice determines whether the game state is set to PAUSE or the game
-	 * is restarted.
-	 */
-	/* public static void saveOrContinueGame() {
-		System.out.println("Do u want to save your progress and return to the main screen? (1) yes (2) no");
-
-		int saveInput = SystemInReader.readInt();
-
-		if (saveInput == 1) {
-			SaveService.saveBiomonToFile(biomonInstance);
-			game = Enums.RunningStates.PAUSE;
-			new MainMenu();
-		} else { 
-			game = Enums.RunningStates.RUNNING;
-			enemyInstance = new Biomon(biomonInstance.getLevel());
-			new FightMenu();
-		}
-	}*/ 
 }

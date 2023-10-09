@@ -4,22 +4,30 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+/**
+ * This class includes the methods used for saving the high score.
+ * 
+ * @author Lennart Alexander Brockmann
+ * @author Josephine Franke
+ * @author Kay Kiontke
+ * 
+ */
+
 public class HighscoreSaveService {
 
     /**
-     * The filename of the Highscore save file.
+     * The filename of the High Score save file.
      */
     final static String secondFileName = "highscore.dat";
 
     /**
-     * Creates a Highscore save file if it does not already exist.
+     * Creates a High Score save file if it does not already exist.
      * Prints a success message if the file is successfully created.
      */
     public static void createHighscoreSaveFile() {
         File highscoreFile = new File(secondFileName);
         try {
             if(highscoreFile.createNewFile()) {
-                //System.out.println("Save File was successfully created");
             }
         } catch (IOException exception) {
             exception.printStackTrace();
@@ -27,19 +35,19 @@ public class HighscoreSaveService {
     }
 
     /**
-     * Checks if the Highscore save file exists.
+     * Checks if the High Score save file exists.
      *
-     * @return true if the Highscore save file exists, false otherwise.
+     * @return true if the High Score save file exists, false otherwise.
      */
     public static boolean isHighscoreSaveFileExisting() {
       return Files.exists(Paths.get(secondFileName));
     }
 
     /**
-     * Saves the given Highscore object to a file.
-     * If the Highscore save file does not exist, it creates the file first.
+     * Saves the given High Score object to a file.
+     * If the High Score save file does not exist, it creates the file first.
      *
-     * @param int the Highscore object to be saved.
+     * @param int the High Score object to be saved.
      */
     public static void saveHighscoreToFile(int highscore) {
         if (!isHighscoreSaveFileExisting()) {
@@ -53,9 +61,9 @@ public class HighscoreSaveService {
     }
 
     /**
-     * Reads a Highscore object from the save file.
+     * Reads a High Score object from the save file.
      *
-     * @return the Highscore object read from the file, or null if an error occurs.
+     * @return the High Score object read from the file, or null if an error occurs.
      */
     public static int readHighscoreFromFile() {
         int savedHighscore = 0;

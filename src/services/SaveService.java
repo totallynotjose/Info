@@ -6,6 +6,15 @@ import java.nio.file.Paths;
 
 import model.Biomon;
 
+/**
+ * This class includes the methods used for saving.
+ * 
+ * @author Lennart Alexander Brockmann
+ * @author Josephine Franke
+ * @author Kay Kiontke
+ * 
+ */
+
 public class SaveService {
 
     /**

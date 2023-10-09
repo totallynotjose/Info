@@ -2,39 +2,62 @@ package model;
 
 import java.io.Serializable;
 
-import view.MainMenuView;
+/**
+ * This class includes all the data and methods in regard to the Biomon.
+ * 
+ * @author Lennart Alexander Brockmann
+ * @author Josephine Franke
+ * @author Kay Kiontke
+ * 
+ */
 
 public class Biomon implements Serializable {
 
-	// all the stats the Biomon need
-	// Biomon start at level (index) 0 (equals level 1)
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
+	 * These integers represent the maximum and current HP as well as the type of
+	 * the Biomon.
+	 */
 	private int maxHP, currentHP, type;
+	/**
+	 * This integer represents the Biomons' level.
+	 */
 	private int level = 0;
+	/**
+	 * This integer determines if the player's and the opponent's Biomon will land a
+	 * critical hit.
+	 */
 	public static int crit;
 
-	// stats for attacks
-	// normal attack, critical normal attack, special attack (levels 1 to 15; index
-	// 0 to
-	// 14)
-	// optional: would be nice to read these from a file to make it more readable
+	/**
+	 * This array includes the stats for fluffy type normal attacks, critical normal
+	 * attacks and special attacks from level one to 15.
+	 */
 	private int[][] fluffyStats = { { 10, 12, 16, 16, 18, 21, 21, 22, 24, 24, 26, 28, 28, 29, 31 },
 			{ 12, 14, 17, 18, 20, 26, 26, 27, 29, 29, 32, 34, 34, 35, 37 },
 			{ 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 33, 36, 39, 42, 44 } };
+	/**
+	 * This array includes the stats for slimy type normal attacks, critical normal
+	 * attacks and special attacks from level one to 15.
+	 */
 	private int[][] slimyStats = { { 10, 11, 14, 13, 14, 18, 17, 18, 21, 20, 21, 24, 23, 24, 26 },
 			{ 13, 14, 15, 16, 17, 23, 24, 25, 26, 27, 31, 32, 33, 34, 35 },
 			{ 9, 10, 10, 11, 12, 14, 16, 16, 18, 20, 23, 26, 29, 32, 36 } };
+	/**
+	 * This array includes the stats for crispy type normal attacks, critical normal
+	 * attacks and special attacks from level one to 15.
+	 */
 	private int[][] crispyStats = { { 8, 9, 10, 11, 12, 13, 14, 14, 15, 16, 17, 18, 19, 20, 21 },
 			{ 10, 11, 12, 14, 14, 15, 16, 16, 17, 18, 20, 21, 22, 23, 24 },
 			{ 8, 10, 11, 13, 15, 17, 18, 19, 20, 22, 24, 27, 30, 33, 36 } };
 
-	// all setters and getters
-	/*
-	 * public static int chooseMyType() { //new StarterChoiceMenu();
-	 * System.out.println("Choose your Biomon Type! (1) fluffy (2) slimy (3) crispy"
-	 * ); int decision; decision = SystemInReader.readInt(); return decision; }
+	/**
+	 * A setter for the maximum HP of each type. Type 1 equals fluffy type 2 slimy
+	 * and type 3 crispy types.
 	 */
-
-	// type 1 fluffy; type 2 slimy, type 3 crispy
 	public int calculateMaxHP() {
 		if (type == 1) {
 			return (16 + 5 * level);
@@ -45,10 +68,9 @@ public class Biomon implements Serializable {
 		}
 	}
 
-	/*
-	 * print level and get level are two different methods because getLevel refers
-	 * to the index that we use in arrays (stats for level 1 are index 0, so the
-	 * level starts at 0. But for printing you want the actual level, not the index
+	/**
+	 * Two getters for the current level of a Biomon. One is for the index of the
+	 * array and one for the real level.
 	 */
 	public int getLevel() {
 		if (level > 14) {
@@ -56,7 +78,6 @@ public class Biomon implements Serializable {
 		}
 		return level;
 	}
-
 	public int printLevel() {
 		if (level > 14) {
 			level = 14;
@@ -64,15 +85,12 @@ public class Biomon implements Serializable {
 		return (level + 1);
 	}
 
-	/*
-	 * getType refers to the number/index associated with the type, printType is
-	 * used if you want to print the type; the name of the type is much more useful
-	 * here than the number/index
+	/**
+	 * Two getters for the Type of a Biomon - one as an integer and one as a string.
 	 */
 	public int getType() {
 		return type;
 	}
-
 	public String printType() {
 		if (type == 1) {
 			return "fluffy";
@@ -83,29 +101,37 @@ public class Biomon implements Serializable {
 		}
 	}
 
+	/**
+	 * A getter for the maximum HP of a Biomon.
+	 */
 	public int getMaxHP() {
 		return maxHP;
 	}
 
+	/**
+	 * A getter for the current HP of a Biomon.
+	 */
 	public int getCurrentHP() {
 		return currentHP;
 	}
 
+	/**
+	 * A getter for the initiative of a Biomon.
+	 */
 	public int getInitiative() {
 		return (4 - type) + level / 5;
 	}
 
-	// here damage for attacks and the heal are calculated
-
-	// if the random number is less than 20, a critical hit is made
-	// normal attack damage has the index 0, critical damage has index 1
+	/**
+	 * Here, damage for the normal attack is calculated. Crits can occur.
+	 */
 	public int normalAttack() {
 		int damage = 0;
 		crit = 0;
 
+		// if the calculated random number is less than 20, a critical hit is landed
 		if (Math.random() * 100 < 20) {
 			crit = 1;
-			// System.out.println("Critical hit!");
 		}
 
 		if (type == 1) {
@@ -115,15 +141,13 @@ public class Biomon implements Serializable {
 		} else {
 			damage = crispyStats[crit][level];
 		}
-		// System.out.println("Basic attack, " + damage + " damage dealt!");
-		// System.out.println();
 		return damage;
 	}
 
-	/*
-	 * special attack is effective against a certain types (damage increases by 50%)
-	 * and not effective against another type (damage decreases by 50%). If you
-	 * attack a Biomon of the same type the damage does not change
+	/**
+	 * Here, damage for the special attack is calculated. Special attacks are
+	 * effective against a certain type (damage increases by 50 %) and not very
+	 * effective against another certain type (damage decreases by 50 %).
 	 */
 	public int specialAttack(int enemyType) {
 		int damage;
@@ -155,14 +179,12 @@ public class Biomon implements Serializable {
 				damage = crispyStats[2][level] * 5 / 10;
 			}
 		}
-
-		// System.out.println("Special attack, " + damage + " damage dealt!");
-		// System.out.println();
 		return damage;
 	}
 
-	// message "Healing successful not included here because healing is also used
-	// after you win a fight (message not needed there)
+	/**
+	 * Method used for healing. The Biomon will regain 50 % of its maximum HP.
+	 */
 	public void heal() {
 		crit = 0;
 		if (type == 2 | type == 3) {
@@ -175,6 +197,9 @@ public class Biomon implements Serializable {
 		}
 	}
 
+	/**
+	 * Setter for the current HP of a Biomon.
+	 */
 	public void setCurrentHP(int damage) {
 		currentHP = currentHP - damage;
 		if (currentHP < 0) {
@@ -182,17 +207,19 @@ public class Biomon implements Serializable {
 		}
 	}
 
-	// if you win you level up and heal up to 50% of your new maxHP
+	/**
+	 * Method for leveling up.
+	 */
 	public void levelUp() {
 		if (level < 14) {
 			level++;
 			maxHP = calculateMaxHP();
 		}
-		// System.out.println("You won! Biomon level up: level " + printLevel() + ", max
-		// HP " + maxHP + ", current HP "
-		// + currentHP + "!");
 	}
 
+	/**
+	 * Method for the player's Biomon.
+	 */
 	public Biomon(int type, int level) {
 		this.type = type;
 		this.level = level;
@@ -200,10 +227,14 @@ public class Biomon implements Serializable {
 		currentHP = maxHP;
 	}
 
-	// for enemy Biomon the type is chosen randomly. The level is the level of
-	// myBiomon +/- 1 (to sometimes make it easier, sometimes harder)
+	/**
+	 * Method for the opponent's Biomon.
+	 */
 	public Biomon(int level) {
+		// the type is chosen randomly
 		type = (int) (Math.random() * 3 + 1);
+		// the level is either one below, above or exactly on par with the player's
+		// Biomon's level.
 		this.level = (int) (Math.random() * ((level + 1) - (level - 1) + 1) + (level - 1));
 		if (this.level < 0) {
 			this.level = 0;
