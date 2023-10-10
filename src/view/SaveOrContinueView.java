@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import Controller.GameController;
 import model.Biomon;
 import ressources.Enums;
+import services.HighscoreSaveService;
 import services.SaveService;
 
 /**
@@ -179,6 +180,8 @@ public class SaveOrContinueView extends JFrame {
 			returnbutton.setForeground(Color.DARK_GRAY);
 			returnbutton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+						view.MainMenuView.highscore = 15;
+						HighscoreSaveService.saveHighscoreToFile(view.MainMenuView.highscore);
 						GameController.game = Enums.RunningStates.PAUSE;
 						SaveOrContinueView.this.dispose();
 						new MainMenuView();

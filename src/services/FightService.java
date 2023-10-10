@@ -83,7 +83,7 @@ public class FightService {
 		} else if (enemyBiomon.getInitiative() > myBiomon.getInitiative()) {
 			turn = 1;
 		} else {
-			turn = (int) Math.random() * 10;
+			turn = (int) (Math.random() * 10);
 		}
 
 		if ((myBiomon.getCurrentHP() > 0) && (enemyBiomon.getCurrentHP() > 0)) {

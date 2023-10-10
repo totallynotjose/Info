@@ -44,36 +44,35 @@ public class GameController {
 
 		if (gameInput == 1) {
 			biomonInstance = new Biomon(gameInput, 0);
+			MainMenuView.biomonInstanceCreated = true;
+			game = Enums.RunningStates.RUNNING;
+			enemyInstance = new Biomon(biomonInstance.getLevel());
+			fightMenu = new FightMenuView();
 		} else if (gameInput == 2) {
 			biomonInstance = new Biomon(gameInput, 0);
+			MainMenuView.biomonInstanceCreated = true;
+			game = Enums.RunningStates.RUNNING;
+			enemyInstance = new Biomon(biomonInstance.getLevel());
+			fightMenu = new FightMenuView();
 		} else if (gameInput == 3) {
 			biomonInstance = new Biomon(gameInput, 0);
+			MainMenuView.biomonInstanceCreated = true;
+			game = Enums.RunningStates.RUNNING;
+			enemyInstance = new Biomon(biomonInstance.getLevel());
+			fightMenu = new FightMenuView();
 		} else {
 			if (!SaveService.isBiomonSaveFileExisting()) {
 				new StarterChoiceMenuView();
 			} else {
-				biomonInstance = loadGame(Enums.SaveStates.EXISTING_GAME);
+				biomonInstance = SaveService.readBiomonFromFile();
+				MainMenuView.biomonInstanceCreated = true;
+				game = Enums.RunningStates.RUNNING;
+				enemyInstance = new Biomon(biomonInstance.getLevel());
+				fightMenu = new FightMenuView();
 			}
 		}
-		MainMenuView.biomonInstanceCreated = true;
-		game = Enums.RunningStates.RUNNING;
-		enemyInstance = new Biomon(biomonInstance.getLevel());
-		fightMenu = new FightMenuView();
 	}
 
-	/**
-	 * Loads the Biomon instance based on the specified save state.
-	 *
-	 * @param saveState The save state to load the Biomon from (new game or existing
-	 *                  game).
-	 * @return The loaded Biomon instance.
-	 */
-	public static Biomon loadGame(Enums.SaveStates saveState) {
-		return switch (saveState) {
-		case NEW_GAME -> new Biomon(0, 0);
-		case EXISTING_GAME -> SaveService.readBiomonFromFile();
-		};
-	}
 
 	/**
 	 * This method initiates a fight between the player's Biomon and a randomly generated

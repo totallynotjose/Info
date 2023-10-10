@@ -67,7 +67,7 @@ public class MainMenuView extends JFrame {
 	/**
 	 * This integer is used as a high score.
 	 */
-	public int highscore = 0;
+	public static int highscore = 0;
 	/**
 	 * This boolean checks whether a biomon instance exists in Game.
 	 */
@@ -95,7 +95,6 @@ public class MainMenuView extends JFrame {
 		// if the player achieves a new high score a new high score is saved
 		if (!HighscoreSaveService.isHighscoreSaveFileExisting()) {
 			highscore = 0;
-			HighscoreSaveService.createHighscoreSaveFile();
 			HighscoreSaveService.saveHighscoreToFile(highscore);
 		} else {
 			highscore = HighscoreSaveService.readHighscoreFromFile();

@@ -30,7 +30,6 @@ public class SaveService {
         File file = new File(fileName);
         try {
             if(file.createNewFile()) {
-                System.out.println("Save File was successfully created");
             }
         } catch (IOException exception) {
             exception.printStackTrace();
