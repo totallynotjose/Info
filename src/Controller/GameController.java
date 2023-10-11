@@ -5,7 +5,6 @@ import ressources.Enums;
 import services.FightService;
 import services.SaveService;
 import view.FightMenuView;
-import view.MainMenuView;
 import view.StarterChoiceMenuView;
 
 /**
@@ -44,19 +43,16 @@ public class GameController {
 
 		if (gameInput == 1) {
 			biomonInstance = new Biomon(gameInput, 0);
-			MainMenuView.biomonInstanceCreated = true;
 			game = Enums.RunningStates.RUNNING;
 			enemyInstance = new Biomon(biomonInstance.getLevel());
 			fightMenu = new FightMenuView();
 		} else if (gameInput == 2) {
 			biomonInstance = new Biomon(gameInput, 0);
-			MainMenuView.biomonInstanceCreated = true;
 			game = Enums.RunningStates.RUNNING;
 			enemyInstance = new Biomon(biomonInstance.getLevel());
 			fightMenu = new FightMenuView();
 		} else if (gameInput == 3) {
 			biomonInstance = new Biomon(gameInput, 0);
-			MainMenuView.biomonInstanceCreated = true;
 			game = Enums.RunningStates.RUNNING;
 			enemyInstance = new Biomon(biomonInstance.getLevel());
 			fightMenu = new FightMenuView();
@@ -65,7 +61,6 @@ public class GameController {
 				new StarterChoiceMenuView();
 			} else {
 				biomonInstance = SaveService.readBiomonFromFile();
-				MainMenuView.biomonInstanceCreated = true;
 				game = Enums.RunningStates.RUNNING;
 				enemyInstance = new Biomon(biomonInstance.getLevel());
 				fightMenu = new FightMenuView();

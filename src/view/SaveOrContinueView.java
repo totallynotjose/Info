@@ -86,6 +86,11 @@ public class SaveOrContinueView extends JFrame {
 		savebutton = new JButton("Save and return to Main Menu");
 		continuebutton = new JButton("Continue Game");
 		returnbutton = new JButton("Return to Main Menu");
+		
+		if (GameController.biomonInstance.getLevel() > view.MainMenuView.highscore) {
+			view.MainMenuView.highscore = GameController.biomonInstance.getLevel() + 1;
+			HighscoreSaveService.saveHighscoreToFile(view.MainMenuView.highscore);
+		}
 
 		// label informing the player that their Biomon has evolved
 		if (GameController.biomonInstance.getLevel() == 4 || GameController.biomonInstance.getLevel() == 9) {
@@ -180,8 +185,6 @@ public class SaveOrContinueView extends JFrame {
 			returnbutton.setForeground(Color.DARK_GRAY);
 			returnbutton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-						view.MainMenuView.highscore = 15;
-						HighscoreSaveService.saveHighscoreToFile(view.MainMenuView.highscore);
 						GameController.game = Enums.RunningStates.PAUSE;
 						SaveOrContinueView.this.dispose();
 						new MainMenuView();

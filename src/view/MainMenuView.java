@@ -68,10 +68,6 @@ public class MainMenuView extends JFrame {
 	 * This integer is used as a high score.
 	 */
 	public static int highscore = 0;
-	/**
-	 * This boolean checks whether a biomon instance exists in Game.
-	 */
-	public static boolean biomonInstanceCreated = false;
 
 	/**
 	 * This method creates a JFrame, initializes the components and adds them to the
@@ -98,12 +94,6 @@ public class MainMenuView extends JFrame {
 			HighscoreSaveService.saveHighscoreToFile(highscore);
 		} else {
 			highscore = HighscoreSaveService.readHighscoreFromFile();
-			if (biomonInstanceCreated == true) {
-				if (GameController.biomonInstance.getLevel() > highscore) {
-					highscore = GameController.biomonInstance.getLevel();
-					HighscoreSaveService.saveHighscoreToFile(highscore);
-				}
-			}
 		}
 
 		// label for high score
